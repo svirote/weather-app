@@ -8,6 +8,9 @@ h1 {
   padding: 0 0 0 30px;
   color: #eeeeee;
 }
+.arrow-time {
+  font-size: 15px;
+}
 
 .fa-location-dot:hover,
 .fa-magnifying-glass:hover,
@@ -15,8 +18,7 @@ h1 {
 .celsius:hover,
 .fa-star:hover,
 .fa-globe:hover,
-.fa-arrows-rotate:hover,
-.time-format:hover {
+.fa-arrows-rotate:hover {
   color: #ffd369;
   cursor: pointer;
 }

@@ -188,24 +188,6 @@ function changeUnit(event) {
   }
 }
 
-function changeTimeFormat(event) {
-  let hourString = event.target.innerHTML;
-  let timeFormat = document.querySelector(".time-format");
-
-  if (hourString.search(["h"]) >= 0) {
-    timeFormat.innerHTML = now.toLocaleString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
-  } else {
-    let hours = twoDigitsNumber(now.getHours());
-    let minutes = twoDigitsNumber(now.getMinutes());
-    timeFormat.innerHTML = `${hours}h${minutes}`;
-  }
-  ///maChaine.search([.]/g)
-}
-
 function iconChoice(codeIcon) {
   if (codeIcon === "01d") {
     return `<i class="fa-solid fa-sun"></i>`; //Clear Sky day
@@ -322,8 +304,15 @@ let minutes = twoDigitsNumber(now.getMinutes());
 let dayId = document.querySelector("#day-id");
 dayId.innerHTML = `${formatedDateEN(now, "full")} ${year}`;
 
-let timeId = document.querySelector("#time-id");
-timeId.innerHTML = `${hours}h${minutes}`;
+let timeMilitary = document.querySelector("#time-military");
+timeMilitary.innerHTML = `${hours}h${minutes}`;
+
+let timeTwelve = document.querySelector("#time-twelve");
+timeTwelve.innerHTML = now.toLocaleString("en-US", {
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+});
 
 //function dailyForecast?
 let J1 = document.querySelector("#head-forecast-1"); //Jour n+1
