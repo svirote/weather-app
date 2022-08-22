@@ -1,15 +1,12 @@
 body {
   font-family: "Bebas Neue", cursive;
+  color: #eeeeee;
 }
 
 h1 {
   font-size: 24px;
   margin: 15px auto;
   padding: 0 0 0 30px;
-  color: #eeeeee;
-}
-.arrow-time {
-  font-size: 15px;
 }
 
 .fa-location-dot:hover,
@@ -18,19 +15,25 @@ h1 {
 .celsius:hover,
 .fa-star:hover,
 .fa-globe:hover,
-.fa-arrows-rotate:hover {
+.fa-arrows-rotate:hover,
+li:hover {
   color: #ffd369;
   cursor: pointer;
+}
+
+li {
+  list-style: none;
 }
 
 .language {
   display: none;
+  position: absolute;
 }
 
-.fa-globe:hover .language {
-  color: #ffd369;
-  cursor: pointer;
+.select-language:hover .language {
   display: block;
+  background-color: rgb(86, 93, 104, 0.3);
+  border-radius: 10px;
 }
 
 .window-1 {
@@ -53,19 +56,20 @@ h2 {
 
 h3 {
   padding: 0 0 0 30px;
-  color: #eeeeee;
+}
+
+.equivalent-time {
+  font-size: 15px;
 }
 
 h4 {
   font-size: 60px;
-  color: #eeeeee;
   text-align: left;
   margin: 0 auto;
 }
 
 h5 {
   font-size: 20px;
-  color: #eeeeee;
   margin: 10px auto;
 }
 
@@ -77,7 +81,6 @@ h5 {
 p {
   text-align: center;
   font-size: 20px;
-  color: #eeeeee;
   margin: 0 auto;
 }
 
@@ -112,23 +115,17 @@ textarea {
   text-align: center;
 }
 
-.location {
-  display: block;
-  margin: 0 auto;
-  border: 2px solid #f24a72;
-  background-color: #f24a72;
-  box-shadow: rgb(255, 255, 255, 0.1) 0px 5px 5px 0px;
-  border-radius: 5px;
-  max-width: 260px;
-  position: relative;
-  left: 40px;
-  bottom: 10px;
-}
-
 .window-2 {
   width: 100%;
   display: block;
   margin: 30px auto;
+}
+
+.symbol-prevision {
+  color: #ffd369;
+  text-align: right;
+  font-size: 80px;
+  margin: 0 auto;
 }
 
 .card.prevision {
@@ -139,15 +136,7 @@ textarea {
   background-color: rgb(255, 255, 255, 0);
 }
 
-.symbol-prevision {
-  color: #ffd369;
-  text-align: right;
-  font-size: 80px;
-  margin: 0 auto;
-}
-
 footer {
   font-family: "Kalam", cursive;
   text-align: right;
-  color: #eeeeee;
 }

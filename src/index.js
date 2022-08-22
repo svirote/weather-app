@@ -289,6 +289,16 @@ function forecastByCoords(location) {
   axios.get(completeUrl).then(cityWeatherData);
 }
 
+function timeFormatTwelve(date) {
+  hourTwelveFormat = date.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
+  return hourTwelveFormat;
+}
+
 forecastByCity("Geneve");
 
 let now = new Date(); //current date
@@ -308,11 +318,7 @@ let timeMilitary = document.querySelector("#time-military");
 timeMilitary.innerHTML = `${hours}h${minutes}`;
 
 let timeTwelve = document.querySelector("#time-twelve");
-timeTwelve.innerHTML = now.toLocaleString("en-US", {
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-});
+timeTwelve.innerHTML = timeFormatTwelve(now);
 
 //function dailyForecast?
 let J1 = document.querySelector("#head-forecast-1"); //Jour n+1
@@ -336,9 +342,6 @@ fahrenheitLink.addEventListener("click", changeUnit);
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.classList.remove("celsius"); // When Loaded is not possible to convert to celsius
 celsiusLink.addEventListener("click", changeUnit);
-
-let timeFormat = document.querySelector(".time-format");
-timeFormat.addEventListener("click", changeTimeFormat);
 
 function search(event) {
   event.preventDefault();
