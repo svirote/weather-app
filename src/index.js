@@ -172,8 +172,13 @@ function changeUnit(event) {
     );
     windUnity.forEach((windUnity) => (windUnity.innerText = "mph"));
 
+    //allows convertion to fahrenheit
     celsiusLink.classList.add("celsius");
+    celsiusLink.addEventListener("click", changeUnit);
+
+    //blocks convertion to fahrenheit
     fahrenheitLink.classList.remove("fahrenheit");
+    fahrenheitLink.removeEventListener("click", changeUnit);
   } else {
     tempValue.forEach(
       (tempValue) => (tempValue.innerText = celsiusTemp(tempValue.innerText))
@@ -183,8 +188,12 @@ function changeUnit(event) {
     );
     windUnity.forEach((windUnity) => (windUnity.innerText = "km/h"));
 
+    //allows convertion to fahrenheit
     fahrenheitLink.classList.add("fahrenheit");
+    fahrenheitLink.addEventListener("click", changeUnit);
+    //blocks convertion to celsius
     celsiusLink.classList.remove("celsius");
+    celsiusLink.removeEventListener("click", changeUnit);
   }
 }
 
@@ -340,8 +349,10 @@ let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", changeUnit);
 
 let celsiusLink = document.querySelector("#celsius-link");
+
 celsiusLink.classList.remove("celsius"); // When Loaded is not possible to convert to celsius
-celsiusLink.addEventListener("click", changeUnit);
+
+celsiusLink.removeEventListener("click", changeUnit);
 
 function search(event) {
   event.preventDefault();
