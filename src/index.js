@@ -238,7 +238,7 @@ function iconChoice(codeIcon) {
 }
 
 function cityWeatherData(response) {
-  console.log(response);
+  //console.log(response);
 
   let temp = document.querySelector("#current-main-temperature");
   temp.innerHTML = Math.round(response.data.main.temp);
@@ -377,20 +377,6 @@ currentLocation.addEventListener("click", pointMyLocation);
   timeUpdate.innerHTML = `${Math.floor(diff / 60000)} min ago`;
   window.setTimeout(tick, 10000);
 })(); // Local function to count the last update invoked right away
-
-//document.querySelectorAll(".unit").target.innerHTML = "°F";
-//console.log(document.querySelectorAll(".unit"));
-//array1.forEach((element) => console.log(element));
-//document.querySelector(".fahrenheit").style.color = "#eeeeee";
-
-// write your code here
-// let city = prompt("Enter a city");
-// let citySearch = city.toLowerCase();
-
-//if (weather[citySearch] !== undefined) {
-//  let celsiusTemp = Math.round(weather[citySearch].temp);
-//  let fahrenheitTemp = Math.round(celsiusTemp * 1.8 + 32);
-//  let humidity = weather[citySearch].humidity;
 
 //  alert(
 //    `It is currently ${celsiusTemp}°C (${fahrenheitTemp}°F) in ${city} with a humidity of ${humidity}%`
