@@ -247,7 +247,7 @@ function iconChoice(codeIcon) {
 }
 
 function cityWeatherData(response) {
-  //console.log(response);
+  console.log(response);
 
   let temp = document.querySelector("#current-main-temperature");
   temp.innerHTML = Math.round(response.data.main.temp);
@@ -270,6 +270,7 @@ function cityWeatherData(response) {
   let city = document.querySelector("#city-forecast");
   city.innerHTML = `${response.data.name}, ${response.data.sys.country}`;
 
+  pageUpdate();
   //let time = new Date();
   //let now = time.getTime();
 
@@ -308,51 +309,58 @@ function timeFormatTwelve(date) {
   return hourTwelveFormat;
 }
 
-forecastByCity("Geneve");
+function pageUpdate() {
+  let now = new Date(); //current date
 
-let now = new Date(); //current date
+  let year = now.getFullYear();
+  let hours = twoDigitsNumber(now.getHours());
 
-let year = now.getFullYear();
-let hours = twoDigitsNumber(now.getHours());
+  let greetings = document.querySelector(".greetings");
+  greetings.innerHTML = selectGreeting(now.getHours());
 
-let greetings = document.querySelector(".greetings");
-greetings.innerHTML = selectGreeting(now.getHours());
+  let minutes = twoDigitsNumber(now.getMinutes());
 
-let minutes = twoDigitsNumber(now.getMinutes());
+  let dayId = document.querySelector("#day-id");
+  dayId.innerHTML = `${formatedDateEN(now, "full")} ${year}`;
 
-let dayId = document.querySelector("#day-id");
-dayId.innerHTML = `${formatedDateEN(now, "full")} ${year}`;
+  let timeMilitary = document.querySelector("#time-military");
+  timeMilitary.innerHTML = `${hours}h${minutes}`;
 
-let timeMilitary = document.querySelector("#time-military");
-timeMilitary.innerHTML = `${hours}h${minutes}`;
+  let timeTwelve = document.querySelector("#time-twelve");
+  timeTwelve.innerHTML = timeFormatTwelve(now);
 
-let timeTwelve = document.querySelector("#time-twelve");
-timeTwelve.innerHTML = timeFormatTwelve(now);
+  //function dailyForecast?
+  let J1 = document.querySelector("#head-forecast-1"); //Jour n+1
+  J1.innerHTML = addDays(now, 1);
 
-//function dailyForecast?
-let J1 = document.querySelector("#head-forecast-1"); //Jour n+1
-J1.innerHTML = addDays(now, 1);
+  let J2 = document.querySelector("#head-forecast-2"); //Jour n+2
+  J2.innerHTML = addDays(now, 2);
 
-let J2 = document.querySelector("#head-forecast-2"); //Jour n+2
-J2.innerHTML = addDays(now, 2);
+  let J3 = document.querySelector("#head-forecast-3"); //Jour n+3
+  J3.innerHTML = addDays(now, 3);
 
-let J3 = document.querySelector("#head-forecast-3"); //Jour n+3
-J3.innerHTML = addDays(now, 3);
+  let J4 = document.querySelector("#head-forecast-4"); //Jour n+4
+  J4.innerHTML = addDays(now, 4);
 
-let J4 = document.querySelector("#head-forecast-4"); //Jour n+4
-J4.innerHTML = addDays(now, 4);
+  let J5 = document.querySelector("#head-forecast-5"); //Jour n+5
+  J5.innerHTML = addDays(now, 5);
 
-let J5 = document.querySelector("#head-forecast-5"); //Jour n+5
-J5.innerHTML = addDays(now, 5);
+  let fahrenheitLink = document.querySelector("#fahrenheit-link");
+  fahrenheitLink.addEventListener("click", changeUnit);
 
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", changeUnit);
+  let celsiusLink = document.querySelector("#celsius-link");
 
-let celsiusLink = document.querySelector("#celsius-link");
+  celsiusLink.classList.remove("celsius"); // When Loaded is not possible to convert to celsius
 
-celsiusLink.classList.remove("celsius"); // When Loaded is not possible to convert to celsius
+  celsiusLink.removeEventListener("click", changeUnit);
 
-celsiusLink.removeEventListener("click", changeUnit);
+  (function tick() {
+    let timeUpdate = document.querySelector("#updated");
+    let diff = Math.abs(new Date(now) - new Date()); // difference miliseconds between now and last refresh
+    timeUpdate.innerHTML = `${Math.floor(diff / 60000)} min ago`;
+    window.setTimeout(tick, 10000);
+  })(); // Local function to count the last update invoked right away
+}
 
 function search(event) {
   event.preventDefault();
@@ -370,24 +378,18 @@ function search(event) {
   }
 }
 
-let form = document.querySelector("#search-city");
-form.addEventListener("submit", search);
-
 //when clicking in the geolocation
 function pointMyLocation() {
   navigator.geolocation.getCurrentPosition(forecastByCoords);
 }
 
+forecastByCity("Geneve");
+
+let form = document.querySelector("#search-city");
+form.addEventListener("submit", search);
+
 let currentLocation = document.querySelector("#geolocation");
 currentLocation.addEventListener("click", pointMyLocation);
-
-//
-(function tick() {
-  let timeUpdate = document.querySelector("#updated");
-  let diff = Math.abs(new Date(now) - new Date()); // difference miliseconds between now and last refresh
-  timeUpdate.innerHTML = `${Math.floor(diff / 60000)} min ago`;
-  window.setTimeout(tick, 10000);
-})(); // Local function to count the last update invoked right away
 
 //  alert(
 //    `It is currently ${celsiusTemp}°C (${fahrenheitTemp}°F) in ${city} with a humidity of ${humidity}%`
