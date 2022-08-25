@@ -310,7 +310,7 @@ function timeFormatTwelve(date) {
 }
 
 function pageUpdate() {
-  let now = new Date(); //current date
+  now = new Date(); //current date
 
   let year = now.getFullYear();
   let hours = twoDigitsNumber(now.getHours());
@@ -353,13 +353,6 @@ function pageUpdate() {
   celsiusLink.classList.remove("celsius"); // When Loaded is not possible to convert to celsius
 
   celsiusLink.removeEventListener("click", changeUnit);
-
-  (function tick() {
-    let timeUpdate = document.querySelector("#updated");
-    let diff = Math.abs(new Date(now) - new Date()); // difference miliseconds between now and last refresh
-    timeUpdate.innerHTML = `${Math.floor(diff / 60000)} min ago`;
-    window.setTimeout(tick, 10000);
-  })(); // Local function to count the last update invoked right away
 }
 
 function search(event) {
@@ -383,6 +376,13 @@ function pointMyLocation() {
   navigator.geolocation.getCurrentPosition(forecastByCoords);
 }
 
+function updateLanguage(id) {
+  if (id === 3) {
+    alert("Bem vindo");
+  }
+}
+
+var now = new Date(); //current date
 forecastByCity("Geneve");
 
 let form = document.querySelector("#search-city");
@@ -390,6 +390,16 @@ form.addEventListener("submit", search);
 
 let currentLocation = document.querySelector("#geolocation");
 currentLocation.addEventListener("click", pointMyLocation);
+
+(function tick() {
+  let timeUpdate = document.querySelector("#updated");
+  let diff = Math.abs(new Date(now) - new Date()); // difference miliseconds between now and last refresh
+  timeUpdate.innerHTML = `${Math.floor(diff / 60000)} min ago`;
+  window.setTimeout(tick, 1000);
+})(); // Local function to count the last update invoked right away
+
+//let updatePortuguese = document.querySelector("#pt-br");
+//updatePortuguese.addEventListener("click", alert("ok"));
 
 //  alert(
 //    `It is currently ${celsiusTemp}°C (${fahrenheitTemp}°F) in ${city} with a humidity of ${humidity}%`
