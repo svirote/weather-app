@@ -27,6 +27,7 @@ li {
 
 .language {
   display: none;
+  padding: 10px;
   position: absolute;
 }
 
@@ -139,4 +140,14 @@ textarea {
 footer {
   font-family: "Kalam", cursive;
   text-align: right;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+}
+
+a:link,
+a:visited {
+  color: #ffd369;
 }

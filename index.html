@@ -38,6 +38,7 @@
 
     <!-- CSS folder -->
     <link rel="stylesheet" href="src/styles.css" />
+
     <title>Forecast</title>
   </head>
   <body>
@@ -80,9 +81,9 @@
                 <span class="select-language">
                   <i class="fa-solid fa-globe"></i>
                   <ul class="language">
-                    <li>English</li>
-                    <li>French</li>
-                    <li><i class="flag flag-brazil"></i>Portuguese (PT-BR)</li>
+                    <li><span id="english">🇺🇸 </span></li>
+                    <li><span id="french">🇫🇷 </span></li>
+                    <li><span id="pt-br">🇧🇷 </span></li>
                   </ul>
                 </span>
               </div>
@@ -262,7 +263,16 @@
           <i class="fa-solid fa-arrows-rotate"></i>
           <small>Last updated: <span id="updated">X min ago</span></small>
         </p>
-        <footer>Open-source code by Suelen Virote</footer>
+        <footer>
+          <a
+            href="https://github.com/svirote/weather-app"
+            target="_blank"
+            title="GitHub Suelen Virote"
+          >
+            Open-source code</a
+          >
+          by Suelen Virote
+        </footer>
       </div>
     </div>
 
