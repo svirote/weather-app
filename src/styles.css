@@ -15,8 +15,7 @@ h1 {
 .celsius:hover,
 .fa-star:hover,
 .fa-globe:hover,
-.fa-arrows-rotate:hover,
-li:hover {
+.fa-arrows-rotate:hover {
   color: #ffd369;
   cursor: pointer;
 }

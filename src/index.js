@@ -425,6 +425,36 @@ function updateLanguage(id) {
   }
 }
 
+function languageEN() {
+  language = "en";
+  pageUpdate();
+  document.querySelector(".language-1").style.display = "none";
+  document.querySelector(".language-2").style.display = "block";
+  document.querySelector(".language-3").style.display = "block";
+  document.querySelector("#city-name").placeholder = "Search for city...";
+  //change last updated
+}
+
+function languageFR() {
+  language = "fr";
+  pageUpdate();
+  document.querySelector(".language-1").style.display = "block";
+  document.querySelector(".language-2").style.display = "none";
+  document.querySelector(".language-3").style.display = "block";
+  document.querySelector("#city-name").placeholder = "Recherche par ville...";
+  //change last updated
+}
+
+function languagePTBR() {
+  language = "br";
+  pageUpdate();
+  document.querySelector(".language-1").style.display = "block";
+  document.querySelector(".language-2").style.display = "block";
+  document.querySelector(".language-3").style.display = "none";
+  document.querySelector("#city-name").placeholder = "Procurar por cidade...";
+  //change last updated
+}
+
 var now = new Date(); //current date global variable
 var language = "en"; //english by default
 
@@ -444,7 +474,7 @@ currentLocation.addEventListener("click", pointMyLocation);
 })(); // Local function to count the last update invoked right away
 
 //let updatePortuguese = document.querySelector("#pt-br");
-//updatePortuguese.addEventListener("click", alert("ok")); change search for a city and last updated
+//updatePortuguese.addEventListener("click", alert("ok"));
 
 //  alert(
 //    `It is currently ${celsiusTemp}°C (${fahrenheitTemp}°F) in ${city} with a humidity of ${humidity}%`
