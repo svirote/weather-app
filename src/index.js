@@ -8,14 +8,26 @@ function twoDigitsNumber(twoDigits) {
 }
 
 function selectGreeting(hours) {
+  var greetings = [];
+
+  if (language === "en") {
+    greetings = ["Good Morning", "Good Afternoom", "Good Evening"];
+  }
+  if (language === "fr") {
+    greetings = ["Bonjour", "Bonne après-midi", "Bonsoir"];
+  }
+  if (language === "br") {
+    greetings = ["Bom dia", "Boa tarde", "Boa noite"];
+  }
+
   if (hours < 12) {
-    return `<i class="fa-solid fa-mug-saucer"></i>  Good Morning`;
+    return `<i class="fa-solid fa-mug-saucer"></i>  ${greetings[0]}`;
   }
   if (hours >= 12 && hours < 18) {
-    return `<i class="fa-solid fa-glass-water"></i>  Good Afternoom`;
+    return `<i class="fa-solid fa-glass-water"></i>  ${greetings[1]}`;
   }
   if (hours >= 18) {
-    return `<i class="fa-solid fa-champagne-glasses"></i>  Good Evening`;
+    return `<i class="fa-solid fa-champagne-glasses"></i>  ${greetings[2]}`;
   }
 }
 
@@ -57,7 +69,7 @@ function formatedDateEN(date, format) {
   }
 }
 
-function formatedDateFR(date) {
+function formatedDateFR(date, format) {
   //Weekday
   let weekDaysFR = [
     "Dimanche",
@@ -87,10 +99,15 @@ function formatedDateFR(date) {
   let weekDay = weekDaysFR[date.getDay()];
   let day = date.getDate();
   let month = monthsFR[date.getMonth()];
-  return `${weekDay}, ${day} ${month}`;
+
+  if (format === "full") {
+    return `${weekDay}, ${day} ${month}`;
+  } else {
+    return `${weekDay.substring(0, 3)}, ${day} ${month}`;
+  }
 }
 
-function formatedDatePTBR(date) {
+function formatedDatePTBR(date, format) {
   //Weekday
   let weekDaysPTBR = [
     "Domingo",
@@ -117,10 +134,15 @@ function formatedDatePTBR(date) {
     "Dezembro",
   ];
 
-  let weekDay = weekDaysFR[date.getDay()];
+  let weekDay = weekDaysPTBR[date.getDay()];
   let day = date.getDate();
-  let month = monthsFR[date.getMonth()];
-  return `${weekDay}, ${day} ${month}`;
+  let month = monthsPTBR[date.getMonth()];
+
+  if (format === "full") {
+    return `${weekDay}, ${day} ${month}`;
+  } else {
+    return `${weekDay.substring(0, 3)}, ${day} ${month}`;
+  }
 }
 
 function addDays(date, days) {
@@ -129,7 +151,16 @@ function addDays(date, days) {
     date.getMonth(),
     date.getDate() + days
   );
-  return formatedDateEN(dayN, "partial");
+
+  if (language === "en") {
+    return formatedDateEN(dayN, "partial");
+  }
+  if (language === "fr") {
+    return formatedDateFR(dayN, "partial");
+  }
+  if (language === "br") {
+    return formatedDatePTBR(dayN, "partial");
+  }
 }
 
 function fahrenheitTemp(temp) {
@@ -309,6 +340,18 @@ function timeFormatTwelve(date) {
   return hourTwelveFormat;
 }
 
+function formatedDateSelection() {
+  if (language === "en") {
+    return formatedDateEN(now, "full");
+  }
+  if (language === "fr") {
+    return formatedDateFR(now, "full");
+  }
+  if (language === "br") {
+    return formatedDatePTBR(now, "full");
+  }
+}
+
 function pageUpdate() {
   now = new Date(); //current date
 
@@ -321,7 +364,7 @@ function pageUpdate() {
   let minutes = twoDigitsNumber(now.getMinutes());
 
   let dayId = document.querySelector("#day-id");
-  dayId.innerHTML = `${formatedDateEN(now, "full")} ${year}`;
+  dayId.innerHTML = `${formatedDateSelection()} ${year}`;
 
   let timeMilitary = document.querySelector("#time-military");
   timeMilitary.innerHTML = `${hours}h${minutes}`;
@@ -382,7 +425,9 @@ function updateLanguage(id) {
   }
 }
 
-var now = new Date(); //current date
+var now = new Date(); //current date global variable
+var language = "en"; //english by default
+
 forecastByCity("Geneve");
 
 let form = document.querySelector("#search-city");
@@ -399,7 +444,7 @@ currentLocation.addEventListener("click", pointMyLocation);
 })(); // Local function to count the last update invoked right away
 
 //let updatePortuguese = document.querySelector("#pt-br");
-//updatePortuguese.addEventListener("click", alert("ok"));
+//updatePortuguese.addEventListener("click", alert("ok")); change search for a city and last updated
 
 //  alert(
 //    `It is currently ${celsiusTemp}°C (${fahrenheitTemp}°F) in ${city} with a humidity of ${humidity}%`

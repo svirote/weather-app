@@ -31,6 +31,10 @@ li {
   position: absolute;
 }
 
+.language-1 {
+  display: none;
+}
+
 .select-language:hover .language {
   display: block;
   background-color: rgb(86, 93, 104, 0.3);
