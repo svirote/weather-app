@@ -129,6 +129,10 @@ textarea {
   margin: 0 auto;
 }
 
+.window-3 {
+  padding: 0 60px;
+}
+
 .card.prevision {
   border: 1px solid #eeeeee;
   display: block;
