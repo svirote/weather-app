@@ -87,7 +87,7 @@
                         id="english"
                         title="English (USA)"
                         class="language-1"
-                        onClick="return languageEN()"
+                        onClick="languageEN()"
                       >
                         <img src="images/us.svg" width="30px" />
                       </a>
@@ -98,7 +98,7 @@
                         id="french"
                         title="Français (France)"
                         class="language-2"
-                        onClick="return languageFR()"
+                        onClick="languageFR()"
                       >
                         <img src="images/fr.svg" width="30px" />
                       </a>
@@ -109,7 +109,7 @@
                         id="pt-br"
                         title="Português (Brasil)"
                         class="language-3"
-                        onClick="return languagePTBR()"
+                        onClick="languagePTBR()"
                       >
                         <img src="images/br.svg" width="30px" />
                       </a>
@@ -131,7 +131,9 @@
                 <div id="day-id">Weekday, DD Month YYYY</div>
                 <div class="time-format">
                   <span id="time-military">HHhMM </span>
-                  <span class="equivalent-time"> &emsp; or &emsp; </span>
+                  <span class="equivalent-time">
+                    &emsp; <i class="fa-solid fa-arrows-left-right"></i> &emsp;
+                  </span>
                   <span id="time-twelve"> H:MM AM</span>
                 </div>
               </h3>
