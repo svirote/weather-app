@@ -408,9 +408,9 @@ function search(event) {
     searchInput.value = null;
     forecastByCity(city);
   } else {
-    city.innerHTML = `😝 Please select a city`;
-    let iconWeater = document.querySelector("#icon-prevision");
-    iconWeater.innerHTML = `<i class="fa-solid fa-circle-question"></i>`;
+    let page = document.querySelector(".window-1");
+    let iconWeater = `<i class="fa-solid fa-circle-question"></i>`;
+    page.innerHTML = `${iconWeater} Oh no! <br/> You didn't select a city. <br/>  Please reload the page.`;
   }
 }
 
@@ -478,15 +478,18 @@ updatePortuguese.addEventListener("click", languagePTBR);
 (function tick() {
   let timeUpdate = document.querySelector("#updated");
   let diff = Math.abs(new Date(now) - new Date()); // difference miliseconds between now and last refresh
-  timeUpdate.innerHTML = `${Math.floor(diff / 60000)} min ago`;
+  let passedMinutes = Math.floor(diff / 60000);
+
+  if (language === "en") {
+    timeUpdate.innerHTML = `Updated ${passedMinutes} min ago`;
+  }
+  if (language === "fr") {
+    timeUpdate.innerHTML = `Mise à jour il y a ${passedMinutes} min`;
+  }
+  if (language === "br") {
+    timeUpdate.innerHTML = `Atualizado faz ${passedMinutes} min`;
+  }
   window.setTimeout(tick, 1000);
 })(); // Local function to count the last update invoked right away
 
-//  alert(
-//    `It is currently ${celsiusTemp}°C (${fahrenheitTemp}°F) in ${city} with a humidity of ${humidity}%`
-//  );
-//} else {
-//alert(
-//    `Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+ ${citySearch}`
-//  );
-// }
+// `Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+ ${citySearch}`
