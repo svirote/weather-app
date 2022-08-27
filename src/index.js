@@ -16,7 +16,7 @@ function selectGreeting(hours) {
   if (language === "fr") {
     greetings = ["Bonjour", "Bonne après-midi", "Bonsoir"];
   }
-  if (language === "br") {
+  if (language === "pt_br") {
     greetings = ["Bom dia", "Boa tarde", "Boa noite"];
   }
 
@@ -158,7 +158,7 @@ function addDays(date, days) {
   if (language === "fr") {
     return formatedDateFR(dayN, "partial");
   }
-  if (language === "br") {
+  if (language === "pt_br") {
     return formatedDatePTBR(dayN, "partial");
   }
 }
@@ -298,8 +298,13 @@ function cityWeatherData(response) {
   let iconWeater = document.querySelector("#icon-prevision");
   iconWeater.innerHTML = iconChoice(response.data.weather[0].icon);
 
+  let description = document.querySelector("#weather-description");
+  description.innerHTML = response.data.weather[0].description;
+
   let city = document.querySelector("#city-forecast");
   city.innerHTML = `${response.data.name}, ${response.data.sys.country}`;
+
+  cityName = response.data.name;
 
   pageUpdate();
   //let time = new Date();
@@ -312,7 +317,7 @@ function forecastByCity(cityName) {
   let apiWeatherKey = "951b5746581fed4443760487ebb7e1e0";
   let apiUrlStart = "https://api.openweathermap.org/data/2.5/weather?q=";
   let units = "metric";
-  let completeUrl = `${apiUrlStart} ${cityName}&appid=${apiWeatherKey}&units=${units}`;
+  let completeUrl = `${apiUrlStart} ${cityName}&lang=${language}&appid=${apiWeatherKey}&units=${units}`;
 
   axios.get(completeUrl).then(cityWeatherData);
 }
@@ -325,7 +330,7 @@ function forecastByCoords(location) {
   let apiUrlStart = "https://api.openweathermap.org/data/2.5/weather?";
   let units = "metric";
 
-  let completeUrl = `${apiUrlStart}lat=${lat}&lon=${lon}&appid=${apiWeatherKey}&units=${units}`;
+  let completeUrl = `${apiUrlStart}lat=${lat}&lon=${lon}&lang=${language}&appid=${apiWeatherKey}&units=${units}`;
 
   axios.get(completeUrl).then(cityWeatherData);
 }
@@ -347,7 +352,7 @@ function formatedDateSelection() {
   if (language === "fr") {
     return formatedDateFR(now, "full");
   }
-  if (language === "br") {
+  if (language === "pt_br") {
     return formatedDatePTBR(now, "full");
   }
 }
@@ -392,9 +397,7 @@ function pageUpdate() {
   fahrenheitLink.addEventListener("click", changeUnit);
 
   let celsiusLink = document.querySelector("#celsius-link");
-
   celsiusLink.classList.remove("celsius"); // When Loaded is not possible to convert to celsius
-
   celsiusLink.removeEventListener("click", changeUnit);
 }
 
@@ -427,7 +430,7 @@ function updateLanguage(id) {
 
 function languageEN() {
   language = "en";
-  pageUpdate();
+  forecastByCity(cityName);
   document.querySelector(".language-1").style.display = "none";
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "block";
@@ -437,7 +440,7 @@ function languageEN() {
 
 function languageFR() {
   language = "fr";
-  pageUpdate();
+  forecastByCity(cityName);
   document.querySelector(".language-1").style.display = "block";
   document.querySelector(".language-2").style.display = "none";
   document.querySelector(".language-3").style.display = "block";
@@ -446,8 +449,8 @@ function languageFR() {
 }
 
 function languagePTBR() {
-  language = "br";
-  pageUpdate();
+  language = "pt_br";
+  forecastByCity(cityName);
   document.querySelector(".language-1").style.display = "block";
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "none";
@@ -457,8 +460,8 @@ function languagePTBR() {
 
 var now = new Date(); //current date global variable
 var language = "en"; //english by default
-
-forecastByCity("Geneve");
+var cityName = "Paris"; //Paris by default
+forecastByCity(cityName);
 
 let form = document.querySelector("#search-city");
 form.addEventListener("submit", search);
@@ -484,9 +487,9 @@ updatePortuguese.addEventListener("click", languagePTBR);
     timeUpdate.innerHTML = `Updated ${passedMinutes} min ago`;
   }
   if (language === "fr") {
-    timeUpdate.innerHTML = `Mise à jour il y a ${passedMinutes} min`;
+    timeUpdate.innerHTML = `Mis à jour il y a ${passedMinutes} min`;
   }
-  if (language === "br") {
+  if (language === "pt_br") {
     timeUpdate.innerHTML = `Atualizado faz ${passedMinutes} min`;
   }
   window.setTimeout(tick, 1000);

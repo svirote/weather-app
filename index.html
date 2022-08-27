@@ -137,55 +137,45 @@
             </div>
             <div class="col-6">
               <div class="row w-1">
-                <div id="icon-prevision" class="col-4 symbol-prevision">
-                  <i class="fa-solid fa-circle-question"></i>
+                <div class="col-4">
+                  <div id="icon-prevision" class="col-4 symbol-prevision">
+                    <i class="fa-solid fa-circle-question"></i>
+                  </div>
                 </div>
 
                 <div class="col-8">
-                  <div class="row w-2">
-                    <div class="col-2">
-                      <h4>
-                        <span id="current-main-temperature" class="temperature"
-                          >29</span
-                        >
-                      </h4>
+                  <h4>
+                    <span class="main-temp-value">
+                      <span id="current-main-temperature" class="temperature">
+                        29
+                      </span>
+                    </span>
+                    <span class="main-temp-unit">
+                      <span id="celsius-link" class="celsius"> °C</span> |
+                      <span id="fahrenheit-link" class="fahrenheit">°F</span>
+                    </span>
+                  </h4>
+
+                  <h5 class="info-current-day">
+                    <div id="weather-description" class="day-description">
+                      Sunny
                     </div>
-                    <div class="col-10">
-                      <h5>
-                        <span id="celsius-link" class="celsius"> °C</span> |
-                        <span id="fahrenheit-link" class="fahrenheit">°F</span>
-                      </h5>
-                    </div>
-                    <div class="row w-2">
-                      <p class="min-max-current-day">
-                        Max:
-                        <span id="current-max-temperature" class="temperature">
-                          32</span
-                        >
-                        <span class="unit">°C</span> | Min:
-                        <span id="current-min-temperature" class="temperature">
-                          25</span
-                        >
-                        <span class="unit">°C</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row w-3">
-                <div class="col-3"></div>
-                <div class="col-3">
-                  <p>
+                    Max:
+                    <span id="current-max-temperature" class="temperature">
+                      32</span
+                    >
+                    <span class="unit">°C</span>&ensp; Min:
+                    <span id="current-min-temperature" class="temperature">
+                      25
+                    </span>
+                    <span class="unit">°C</span> <br />
+
                     <i class="fa-solid fa-droplet"> </i>
-                    <span id="humidity"> 15 </span> %
-                  </p>
-                </div>
-                <div class="col-3">
-                  <p>
+                    <span id="humidity"> 15 </span> % &emsp;
                     <i class="fa-solid fa-wind"></i>
                     <span id="current-wind" class="value-wind"> 14 </span>
                     <span class="unit-wind">km/h</span>
-                  </p>
+                  </h5>
                 </div>
               </div>
             </div>
@@ -198,9 +188,11 @@
               <div class="card-body">
                 <p>
                   <span class="temperature">33</span>
-                  <span class="unit">°C</span> |
-                  <span class="temperature">25</span>
-                  <span class="unit">°C</span>
+                  <span class="unit">°C</span> &ensp;
+                  <span class="minimal-temp">
+                    <span class="temperature">25</span>
+                    <span class="unit">°C</span>
+                  </span>
                 </p>
                 <div class="forecast-symbol" id="symbol-forecast-1">
                   <i class="fa-solid fa-cloud-rain"></i>
@@ -214,9 +206,11 @@
               <div class="card-body">
                 <p>
                   <span class="temperature">34</span>
-                  <span class="unit">°C</span> |
-                  <span class="temperature">25</span>
-                  <span class="unit">°C</span>
+                  <span class="unit">°C</span> &ensp;
+                  <span class="minimal-temp">
+                    <span class="temperature">25</span>
+                    <span class="unit">°C</span>
+                  </span>
                 </p>
                 <div class="forecast-symbol" id="symbol-forecast-2">
                   <i class="fa-solid fa-cloud"></i>
@@ -230,9 +224,11 @@
               <div class="card-body">
                 <p>
                   <span class="temperature">35</span>
-                  <span class="unit">°C</span> |
-                  <span class="temperature">25</span>
-                  <span class="unit">°C</span>
+                  <span class="unit">°C</span> &ensp;
+                  <span class="minimal-temp">
+                    <span class="temperature">25</span>
+                    <span class="unit">°C</span>
+                  </span>
                 </p>
                 <div class="forecast-symbol" id="symbol-forecast-3">
                   <i class="fa-solid fa-cloud-sun"></i>
@@ -246,9 +242,11 @@
               <div class="card-body">
                 <p>
                   <span class="temperature">36</span>
-                  <span class="unit">°C</span> |
-                  <span class="temperature">25</span>
-                  <span class="unit">°C</span>
+                  <span class="unit">°C</span> &ensp;
+                  <span class="minimal-temp">
+                    <span class="temperature">25</span>
+                    <span class="unit">°C</span>
+                  </span>
                 </p>
                 <div class="forecast-symbol" id="symbol-forecast-4">
                   <i class="fa-solid fa-cloud"></i>
@@ -262,9 +260,11 @@
               <div class="card-body">
                 <p>
                   <span class="temperature">37</span>
-                  <span class="unit">°C</span> |
-                  <span class="temperature">25</span>
-                  <span class="unit">°C</span>
+                  <span class="unit">°C</span> &ensp;
+                  <span class="minimal-temp">
+                    <span class="temperature">25</span>
+                    <span class="unit">°C</span>
+                  </span>
                 </p>
                 <div class="forecast-symbol" id="symbol-forecast-5">
                   <i class="fa-solid fa-cloud"></i>
