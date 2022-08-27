@@ -466,15 +466,21 @@ form.addEventListener("submit", search);
 let currentLocation = document.querySelector("#geolocation");
 currentLocation.addEventListener("click", pointMyLocation);
 
+let updateEnglish = document.querySelector("#english");
+updateEnglish.addEventListener("click", languageEN);
+
+let updateFrench = document.querySelector("#french");
+updateFrench.addEventListener("click", languageFR);
+
+let updatePortuguese = document.querySelector("#pt-br");
+updatePortuguese.addEventListener("click", languagePTBR);
+
 (function tick() {
   let timeUpdate = document.querySelector("#updated");
   let diff = Math.abs(new Date(now) - new Date()); // difference miliseconds between now and last refresh
   timeUpdate.innerHTML = `${Math.floor(diff / 60000)} min ago`;
   window.setTimeout(tick, 1000);
 })(); // Local function to count the last update invoked right away
-
-//let updatePortuguese = document.querySelector("#pt-br");
-//updatePortuguese.addEventListener("click", alert("ok"));
 
 //  alert(
 //    `It is currently ${celsiusTemp}°C (${fahrenheitTemp}°F) in ${city} with a humidity of ${humidity}%`
