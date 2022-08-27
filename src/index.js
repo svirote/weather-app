@@ -469,6 +469,8 @@ form.addEventListener("submit", search);
 let currentLocation = document.querySelector("#geolocation");
 currentLocation.addEventListener("click", pointMyLocation);
 
+document.querySelector(".language-1").style.display = "none";
+
 let updateEnglish = document.querySelector("#english");
 updateEnglish.addEventListener("click", languageEN);
 

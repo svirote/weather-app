@@ -3,52 +3,31 @@ body {
   color: #eeeeee;
 }
 
+a:link,
+a:visited {
+  color: #ffd369;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: transparent;
+  color: #eeeeee;
+}
+
+footer {
+  font-family: "Kalam", cursive;
+  text-align: right;
+}
+
 h1 {
   font-size: 24px;
   margin: 15px auto;
   padding: 0 0 0 30px;
-}
-
-.fa-location-dot:hover,
-.fa-magnifying-glass:hover,
-.fahrenheit:hover,
-.celsius:hover,
-.fa-star:hover,
-.fa-globe:hover,
-.fa-arrows-rotate:hover {
-  color: #ffd369;
-  cursor: pointer;
-}
-
-li {
-  list-style: none;
-}
-
-.language {
-  display: none;
-  padding: 10px;
-  position: absolute;
-}
-
-.language-1 {
-  display: none;
-}
-
-.select-language:hover .language {
-  display: block;
-  background-color: rgb(86, 93, 104, 0.3);
-  border-radius: 10px;
-}
-
-.window-1 {
-  width: 80%;
-  display: block;
-  margin: 10px auto;
-  border: 10px solid #eeeeee;
-  box-shadow: rgb(57, 62, 70, 0.3) 1px 5px 5px 1px;
-  border-radius: 5px;
-  padding: 0 10px;
-  background: #222831;
 }
 
 h2 {
@@ -62,10 +41,6 @@ h3 {
   padding: 0 0 0 30px;
 }
 
-.equivalent-time {
-  font-size: 15px;
-}
-
 h4 {
   font-size: 60px;
   height: 60px;
@@ -73,48 +48,9 @@ h4 {
   margin: 0 auto;
 }
 
-.main-temp-unit {
-  font-size: 20px;
-  position: relative;
-  top: -27px;
-}
-
 h5 {
   text-align: left;
   font-size: 20px;
-}
-
-.celsius,
-.fahrenheit {
-  color: #565d68;
-}
-
-p {
-  text-align: center;
-  font-size: 20px;
-  margin: 0 auto;
-}
-
-.minimal-temp {
-  color: #565d68;
-}
-
-.day-description {
-  color: #ffd369;
-  font-style: italic;
-}
-
-.forecast-symbol {
-  font-size: 30px;
-  color: #eeeeee;
-  margin: 0 auto;
-  text-align: center;
-}
-
-button {
-  border: none;
-  background: transparent;
-  color: #eeeeee;
 }
 
 input,
@@ -125,26 +61,14 @@ textarea {
   border-radius: 5px;
 }
 
-.header {
-  font-size: 13px;
-  color: #eeeeee;
+li {
+  list-style: none;
+}
+
+p {
   text-align: center;
-}
-
-.window-2 {
-  width: 100%;
-  display: block;
-  margin: 30px auto;
-}
-
-.symbol-prevision {
-  color: #ffd369;
-  text-align: center;
-  font-size: 100px;
-}
-
-.window-3 {
-  padding: 0 60px;
+  font-size: 20px;
+  margin: 0 auto;
 }
 
 .card.prevision {
@@ -155,17 +79,89 @@ textarea {
   background-color: rgb(255, 255, 255, 0);
 }
 
-footer {
-  font-family: "Kalam", cursive;
-  text-align: right;
+.celsius,
+.fahrenheit {
+  color: #565d68;
 }
 
-a {
-  outline: none;
-  text-decoration: none;
-}
-
-a:link,
-a:visited {
+.day-description {
   color: #ffd369;
+  font-style: italic;
+}
+
+.equivalent-time {
+  font-size: 15px;
+}
+
+.fa-location-dot:hover,
+.fa-magnifying-glass:hover,
+.fahrenheit:hover,
+.celsius:hover,
+.fa-star:hover,
+.fa-globe:hover,
+.fa-arrows-rotate:hover {
+  color: #ffd369;
+  cursor: pointer;
+}
+
+.forecast-symbol {
+  font-size: 30px;
+  color: #eeeeee;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.header {
+  font-size: 13px;
+  color: #eeeeee;
+  text-align: center;
+}
+
+.language {
+  display: none;
+  padding: 10px;
+  position: absolute;
+}
+
+.minimal-temp {
+  color: #565d68;
+}
+
+.main-temp-unit {
+  font-size: 20px;
+  position: relative;
+  top: -27px;
+}
+
+.select-language:hover .language {
+  display: block;
+  background-color: rgb(86, 93, 104, 0.3);
+  border-radius: 10px;
+}
+
+.symbol-prevision {
+  color: #ffd369;
+  text-align: center;
+  font-size: 100px;
+}
+
+.window-1 {
+  width: 80%;
+  display: block;
+  margin: 10px auto;
+  border: 10px solid #eeeeee;
+  box-shadow: rgb(57, 62, 70, 0.3) 1px 5px 5px 1px;
+  border-radius: 5px;
+  padding: 0 10px;
+  background: #222831;
+}
+
+.window-2 {
+  width: 100%;
+  display: block;
+  margin: 30px auto;
+}
+
+.window-3 {
+  padding: 0 60px;
 }
