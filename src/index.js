@@ -280,6 +280,13 @@ function cityWeatherData(response) {
   let lat = response.data.coord.lat;
   let lon = response.data.coord.lon;
 
+  let cityOffset = response.data.timezone / 3600; //Time zone city to UTC in hours
+  let userOffset = now.getTimezoneOffset() / 60; // Time zone user to UTC in hours
+
+  let diffHours = cityOffset + userOffset;
+
+  cityDate.setTime(now.getTime() + diffHours * 60 * 60 * 1000);
+
   let temp = document.querySelector("#current-main-temperature");
   temp.innerHTML = Math.round(response.data.main.temp);
 
@@ -308,10 +315,6 @@ function cityWeatherData(response) {
 
   retrieveForecast(lat, lon);
   pageUpdate();
-  //let time = new Date();
-  //let now = time.getTime();
-
-  //alert(response.data.timezone);
 }
 
 function currentInfoByCoords(location) {
@@ -348,13 +351,13 @@ function timeFormatTwelve(date) {
 
 function formatedDateSelection() {
   if (language === "en") {
-    return formatedDateEN(now, "full");
+    return formatedDateEN(cityDate, "full");
   }
   if (language === "fr") {
-    return formatedDateFR(now, "full");
+    return formatedDateFR(cityDate, "full");
   }
   if (language === "pt_br") {
-    return formatedDatePTBR(now, "full");
+    return formatedDatePTBR(cityDate, "full");
   }
 }
 
@@ -410,13 +413,13 @@ function retrieveForecast(lat, lon) {
 function pageUpdate() {
   now = new Date(); //current date
 
-  let year = now.getFullYear();
-  let hours = twoDigitsNumber(now.getHours());
+  let year = cityDate.getFullYear();
+  let hours = twoDigitsNumber(cityDate.getHours());
 
   let greetings = document.querySelector(".greetings");
   greetings.innerHTML = selectGreeting(now.getHours());
 
-  let minutes = twoDigitsNumber(now.getMinutes());
+  let minutes = twoDigitsNumber(cityDate.getMinutes());
 
   let dayId = document.querySelector("#day-id");
   dayId.innerHTML = `${formatedDateSelection()} ${year}`;
@@ -425,7 +428,7 @@ function pageUpdate() {
   timeMilitary.innerHTML = `${hours}h${minutes}`;
 
   let timeTwelve = document.querySelector("#time-twelve");
-  timeTwelve.innerHTML = timeFormatTwelve(now);
+  timeTwelve.innerHTML = timeFormatTwelve(cityDate);
 
   let fahrenheitLink = document.querySelector("#fahrenheit-link");
   fahrenheitLink.addEventListener("click", changeUnit);
@@ -501,6 +504,7 @@ function addFavouriteCity() {
 }
 
 var now = new Date(); //current date global variable
+var cityDate = new Date(); //caity date global variable
 var language = "en"; //english by default
 var cityName = "Rio de Janeiro"; //Rio de Janeiro by default
 
