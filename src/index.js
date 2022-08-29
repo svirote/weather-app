@@ -145,12 +145,8 @@ function formatedDatePTBR(date, format) {
   }
 }
 
-function addDays(date, days) {
-  let dayN = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() + days
-  );
+function forecastDays(dayDtFormat) {
+  let dayN = new Date(dayDtFormat * 1000);
 
   if (language === "en") {
     return formatedDateEN(dayN, "partial");
@@ -230,55 +226,59 @@ function changeUnit(event) {
 
 function iconChoice(codeIcon) {
   if (codeIcon === "01d") {
-    return `<i class="fa-solid fa-sun"></i>`; //Clear Sky day
+    return `<i class="wi wi-day-sunny"></i>`; //Clear Sky day
   }
   if (codeIcon === "01n") {
-    return `<i class="fa-solid fa-moon"></i>`; //Clear Sky night
+    return `<i class="wi wi-night-clear"></i>`; //Clear Sky night
   }
 
   if (codeIcon === "02d") {
-    return `<i class="fa-solid fa-cloud-sun"></i>`; //few clouds day
+    return `<i class="wi wi-day-cloudy"></i>`; //few clouds day
   }
   if (codeIcon === "02n") {
-    return `<i class="fa-solid fa-cloud-moon"></i>`; //few clouds night
+    return `<i class="wi wi-night-alt-cloudy"></i>`; //few clouds night
   }
 
-  if (
-    codeIcon === "03d" ||
-    codeIcon === "03n" ||
-    codeIcon === "04d" ||
-    codeIcon === "04n"
-  ) {
-    return `<i class="fa-solid fa-cloud"></i>`; //Clear Sky day
+  if (codeIcon === "03d" || codeIcon === "03n") {
+    return `<i class="wi wi-cloud"></i>`; //Scattered clouds: 25-50%
+  }
+
+  if (codeIcon === "04d" || codeIcon === "04n") {
+    return `<i class="wi wi-cloudy"></i>`; //Broken clouds: 51-84%  and Overcast clouds: 85-100%
   }
 
   if (codeIcon === "09d" || codeIcon === "09n") {
-    return `<i class="fa-solid fa-cloud-showers-heavy"></i>`; //shower rain
+    return `<i class="wi wi-rain"></i>`; //shower rain
   }
 
   if (codeIcon === "10d") {
-    return `<i class="fa-solid fa-cloud-sun-rain"></i>`; // rain day
+    return `<i class="wi wi-day-rain"></i>`; // rain day
   }
 
   if (codeIcon === "10n") {
-    return `<i class="fa-solid fa-cloud-moon-rain"></i>`; // rain night
+    return `<i class="wi wi-night-alt-rain"></i>`; // rain night
   }
 
-  if (codeIcon === "11d" || codeIcon === "11n") {
-    return `<i class="fa-solid fa-cloud-bolt"></i>`; //thunderstorm
+  if (codeIcon === "11d") {
+    return `<i class="wi wi-day-lightning"></i>`; //thunderstorm day
+  }
+
+  if (codeIcon === "11n") {
+    return `<i class="wi wi-night-alt-lightning"></i>`; //thunderstorm night
   }
 
   if (codeIcon === "13d" || codeIcon === "13n") {
-    return `<i class="fa-solid fa-snowflake"></i>`; //snow
+    return `<i class="wi wi-snowflake-cold"></i>`; //snow
   }
 
   if (codeIcon === "50d" || codeIcon === "50n") {
-    return `<i class="fa-solid fa-circle-question"></i>`; //mist
+    return `<i class="wi wi-dust"></i>`; //mist
   }
 }
 
 function cityWeatherData(response) {
-  console.log(response);
+  let lat = response.data.coord.lat;
+  let lon = response.data.coord.lon;
 
   let temp = document.querySelector("#current-main-temperature");
   temp.innerHTML = Math.round(response.data.main.temp);
@@ -306,6 +306,7 @@ function cityWeatherData(response) {
 
   cityName = response.data.name;
 
+  retrieveForecast(lat, lon);
   pageUpdate();
   //let time = new Date();
   //let now = time.getTime();
@@ -313,16 +314,7 @@ function cityWeatherData(response) {
   //alert(response.data.timezone);
 }
 
-function forecastByCity(cityName) {
-  let apiWeatherKey = "951b5746581fed4443760487ebb7e1e0";
-  let apiUrlStart = "https://api.openweathermap.org/data/2.5/weather?q=";
-  let units = "metric";
-  let completeUrl = `${apiUrlStart} ${cityName}&lang=${language}&appid=${apiWeatherKey}&units=${units}`;
-
-  axios.get(completeUrl).then(cityWeatherData);
-}
-
-function forecastByCoords(location) {
+function currentInfoByCoords(location) {
   let lat = location.coords.latitude;
   let lon = location.coords.longitude;
 
@@ -331,6 +323,15 @@ function forecastByCoords(location) {
   let units = "metric";
 
   let completeUrl = `${apiUrlStart}lat=${lat}&lon=${lon}&lang=${language}&appid=${apiWeatherKey}&units=${units}`;
+
+  axios.get(completeUrl).then(cityWeatherData);
+}
+
+function currentInfoByCity(cityName) {
+  let apiWeatherKey = "951b5746581fed4443760487ebb7e1e0";
+  let apiUrlStart = "https://api.openweathermap.org/data/2.5/weather?q=";
+  let units = "metric";
+  let completeUrl = `${apiUrlStart} ${cityName}&lang=${language}&appid=${apiWeatherKey}&units=${units}`;
 
   axios.get(completeUrl).then(cityWeatherData);
 }
@@ -357,6 +358,55 @@ function formatedDateSelection() {
   }
 }
 
+function showForecast(response) {
+  let forecast = response.data.daily; //returns a array
+
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = "";
+
+  forecast.forEach(function (dayInfo, index) {
+    if (index > 0 && index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `
+      <div class="col">
+            <div class="card mb-3 prevision" style="max-width: 150px">
+              <div class="card-body">
+                <p>
+                  <span class="temperature"> 
+                  ${Math.round(dayInfo.temp.max)} </span>
+                  <span class="unit">°C</span> &ensp;
+                  <span class="minimal-temp">
+                    <span class="temperature">
+                    ${Math.round(dayInfo.temp.min)}</span>
+                    <span class="unit">°C</span>
+                  </span>
+                </p>
+                <div class="forecast-symbol">
+                  ${iconChoice(dayInfo.weather[0].icon)}
+                </div>
+                <div class="header"> ${forecastDays(dayInfo.dt)} </div>
+              </div>
+            </div>
+          </div>
+          `;
+    }
+  });
+
+  forecastElement.innerHTML = forecastHTML;
+  //console.log(forecastHTML);
+}
+
+function retrieveForecast(lat, lon) {
+  let apiWeatherKey = "2b6fdad0cbd018949c50c70f72250726";
+  let apiUrlStart = "https://api.openweathermap.org/data/2.5/onecall?";
+  let units = "metric";
+
+  let completeUrl = `${apiUrlStart}lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiWeatherKey}&units=${units}&lang=${language}`;
+
+  axios.get(completeUrl).then(showForecast);
+}
+
 function pageUpdate() {
   now = new Date(); //current date
 
@@ -377,22 +427,6 @@ function pageUpdate() {
   let timeTwelve = document.querySelector("#time-twelve");
   timeTwelve.innerHTML = timeFormatTwelve(now);
 
-  //function dailyForecast?
-  let J1 = document.querySelector("#head-forecast-1"); //Jour n+1
-  J1.innerHTML = addDays(now, 1);
-
-  let J2 = document.querySelector("#head-forecast-2"); //Jour n+2
-  J2.innerHTML = addDays(now, 2);
-
-  let J3 = document.querySelector("#head-forecast-3"); //Jour n+3
-  J3.innerHTML = addDays(now, 3);
-
-  let J4 = document.querySelector("#head-forecast-4"); //Jour n+4
-  J4.innerHTML = addDays(now, 4);
-
-  let J5 = document.querySelector("#head-forecast-5"); //Jour n+5
-  J5.innerHTML = addDays(now, 5);
-
   let fahrenheitLink = document.querySelector("#fahrenheit-link");
   fahrenheitLink.addEventListener("click", changeUnit);
 
@@ -409,7 +443,7 @@ function search(event) {
   if (searchInput.value) {
     let city = searchInput.value;
     searchInput.value = null;
-    forecastByCity(city);
+    currentInfoByCity(city);
   } else {
     let page = document.querySelector(".window-1");
     let iconWeater = `<i class="fa-solid fa-circle-question"></i>`;
@@ -419,7 +453,7 @@ function search(event) {
 
 //when clicking in the geolocation
 function pointMyLocation() {
-  navigator.geolocation.getCurrentPosition(forecastByCoords);
+  navigator.geolocation.getCurrentPosition(currentInfoByCoords);
 }
 
 function updateLanguage(id) {
@@ -430,7 +464,7 @@ function updateLanguage(id) {
 
 function languageEN() {
   language = "en";
-  forecastByCity(cityName);
+  currentInfoByCity(cityName);
   document.querySelector(".language-1").style.display = "none";
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "block";
@@ -440,7 +474,7 @@ function languageEN() {
 
 function languageFR() {
   language = "fr";
-  forecastByCity(cityName);
+  currentInfoByCity(cityName);
   document.querySelector(".language-1").style.display = "block";
   document.querySelector(".language-2").style.display = "none";
   document.querySelector(".language-3").style.display = "block";
@@ -450,7 +484,7 @@ function languageFR() {
 
 function languagePTBR() {
   language = "pt_br";
-  forecastByCity(cityName);
+  currentInfoByCity(cityName);
   document.querySelector(".language-1").style.display = "block";
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "none";
@@ -458,10 +492,19 @@ function languagePTBR() {
   //change last updated
 }
 
+function loadPage() {
+  currentInfoByCity(cityName);
+}
+
+function addFavouriteCity() {
+  //${cityName} is now a favourite city, if you look for a new city the weather for ${cityName} will be avaliable using the arrow
+}
+
 var now = new Date(); //current date global variable
 var language = "en"; //english by default
-var cityName = "Paris"; //Paris by default
-forecastByCity(cityName);
+var cityName = "Rio de Janeiro"; //Rio de Janeiro by default
+
+currentInfoByCity(cityName);
 
 let form = document.querySelector("#search-city");
 form.addEventListener("submit", search);
@@ -479,6 +522,12 @@ updateFrench.addEventListener("click", languageFR);
 
 let updatePortuguese = document.querySelector("#pt-br");
 updatePortuguese.addEventListener("click", languagePTBR);
+
+let reloadPage = document.querySelector("#reload");
+reloadPage.addEventListener("click", loadPage);
+
+let favouriteCity = document.querySelector("#favourite");
+favouriteCity.addEventListener("click", addFavouriteCity);
 
 (function tick() {
   let timeUpdate = document.querySelector("#updated");

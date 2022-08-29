@@ -1,3 +1,5 @@
+/* https://colorhunt.co/palette/222831393e46ffd369eeeeee */
+
 body {
   font-family: "Bebas Neue", cursive;
   color: #eeeeee;
@@ -72,7 +74,7 @@ p {
 }
 
 .card.prevision {
-  border: 1px solid #eeeeee;
+  border: 3px solid #eeeeee;
   display: block;
   margin: 5px auto;
   box-shadow: rgb(54, 48, 98, 0.3) 0px 8px 8px 0;
@@ -106,7 +108,7 @@ p {
 
 .forecast-symbol {
   font-size: 30px;
-  color: #eeeeee;
+  color: #ffd369;
   margin: 0 auto;
   text-align: center;
 }
@@ -159,7 +161,7 @@ p {
 .window-2 {
   width: 100%;
   display: block;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 .window-3 {

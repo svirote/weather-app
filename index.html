@@ -38,6 +38,7 @@
 
     <!-- CSS folder -->
     <link rel="stylesheet" href="src/styles.css" />
+    <link rel="stylesheet" href="src/weather-icons.css" />
 
     <title>Forecast</title>
   </head>
@@ -75,7 +76,9 @@
               </div>
 
               <div class="col-1">
-                <i class="fa-solid fa-star"></i>
+                <span id="favourite">
+                  <i class="fa-solid fa-star"></i>
+                </span>
               </div>
               <div class="col-1">
                 <span class="select-language">
@@ -170,7 +173,7 @@
                     </span>
                     <span class="unit">°C</span> <br />
 
-                    <i class="fa-solid fa-droplet"> </i>
+                    <i class="wi wi-humidity"> </i>
                     <span id="humidity"> 15 </span> % &emsp;
                     <i class="fa-solid fa-wind"></i>
                     <span id="current-wind" class="value-wind"> 14 </span>
@@ -182,102 +185,13 @@
           </div>
         </div>
 
-        <div class="row window-3">
-          <div class="col">
-            <div class="card mb-3 prevision" style="max-width: 150px">
-              <div class="card-body">
-                <p>
-                  <span class="temperature">33</span>
-                  <span class="unit">°C</span> &ensp;
-                  <span class="minimal-temp">
-                    <span class="temperature">25</span>
-                    <span class="unit">°C</span>
-                  </span>
-                </p>
-                <div class="forecast-symbol" id="symbol-forecast-1">
-                  <i class="fa-solid fa-cloud-rain"></i>
-                </div>
-                <div class="header" id="head-forecast-1">Forecast-1, DD/MM</div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card mb-3 prevision" style="max-width: 150px">
-              <div class="card-body">
-                <p>
-                  <span class="temperature">34</span>
-                  <span class="unit">°C</span> &ensp;
-                  <span class="minimal-temp">
-                    <span class="temperature">25</span>
-                    <span class="unit">°C</span>
-                  </span>
-                </p>
-                <div class="forecast-symbol" id="symbol-forecast-2">
-                  <i class="fa-solid fa-cloud"></i>
-                </div>
-                <div class="header" id="head-forecast-2">Forecast-2, DD/MM</div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card mb-3 prevision" style="max-width: 150px">
-              <div class="card-body">
-                <p>
-                  <span class="temperature">35</span>
-                  <span class="unit">°C</span> &ensp;
-                  <span class="minimal-temp">
-                    <span class="temperature">25</span>
-                    <span class="unit">°C</span>
-                  </span>
-                </p>
-                <div class="forecast-symbol" id="symbol-forecast-3">
-                  <i class="fa-solid fa-cloud-sun"></i>
-                </div>
-                <div class="header" id="head-forecast-3">Forecast-3, DD/MM</div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card mb-3 prevision" style="max-width: 150px">
-              <div class="card-body">
-                <p>
-                  <span class="temperature">36</span>
-                  <span class="unit">°C</span> &ensp;
-                  <span class="minimal-temp">
-                    <span class="temperature">25</span>
-                    <span class="unit">°C</span>
-                  </span>
-                </p>
-                <div class="forecast-symbol" id="symbol-forecast-4">
-                  <i class="fa-solid fa-cloud"></i>
-                </div>
-                <div class="header" id="head-forecast-4">Forecast-4, DD/MM</div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card mb-3 prevision" style="max-width: 150px">
-              <div class="card-body">
-                <p>
-                  <span class="temperature">37</span>
-                  <span class="unit">°C</span> &ensp;
-                  <span class="minimal-temp">
-                    <span class="temperature">25</span>
-                    <span class="unit">°C</span>
-                  </span>
-                </p>
-                <div class="forecast-symbol" id="symbol-forecast-5">
-                  <i class="fa-solid fa-cloud"></i>
-                </div>
-                <div class="header" id="head-forecast-5">Forecast-5, DD/MM</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="forecast" class="row window-3">test</div>
 
-        <br />
         <p>
-          <i class="fa-solid fa-arrows-rotate"></i>
+          <a href="#" id="reload">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </a>
+          &ensp;
           <small><span id="updated">Last updated: X min ago</span></small>
         </p>
         <footer>
