@@ -510,7 +510,6 @@ function search(event) {
   }
 }
 
-//when clicking in the geolocation
 function pointMyLocation() {
   navigator.geolocation.getCurrentPosition(currentInfoByCoords);
 }
@@ -555,15 +554,50 @@ function loadPage() {
   currentInfoByCity(cityName);
 }
 
+//finish
 function addfavoriteCity() {
   document.querySelector("#show-fav").style.display = "block";
-  if (favoriteList.length >= 3) {
-    //sorry maximum 4 favorites
-  } else {
-    favoriteList.push(cityName);
-    console.log(favoriteList);
-    //${cityName} is now a favorite city, if you look for a new city the weather for ${cityName} will be avaliable using the arrow
+
+  favoriteList.push(cityName);
+  manageFavoriteList();
+  let seeFavoriteList = document.querySelector("#favorite");
+  seeFavoriteList.style.color = "#eeeeee";
+
+  if (favoriteList.length === 3) {
+    let favoriteCity = document.querySelector("#add-favorite");
+
+    favoriteCity.removeEventListener("click", addfavoriteCity);
+    favoriteCity.classList.remove("favorite-symbol");
+    favoriteCity.title = "You already have 3 favorite cities";
+    favoriteCity.style.color = "#393E46";
   }
+  //${cityName} is now a favorite city, if you look for a new city the weather for ${cityName} will be avaliable using the arrow
+}
+
+//finish
+function manageFavoriteList() {
+  favoriteList.forEach(function (favoriteCity) {
+    let listOfFavorites = document.querySelector("#list-of-favorites");
+
+    listOfFavorites.innerHTML =
+      listOfFavorites.innerHTML +
+      `
+      <div class="favorite-city">
+         ${favoriteCity}
+        <button class="removal" type="submit">
+          <i class="fa-solid fa-circle-xmark"></i>
+          <i class="fa-solid fa-circle-minus"></i>
+        </button>
+      </div>
+      `;
+  });
+}
+
+//finish
+function directAddFavoriteCity(event) {
+  event.preventDefault();
+  let newFavorite = document.querySelector("#fav-1");
+  console.log(newFavorite);
 }
 
 function showFirstPage() {
@@ -601,7 +635,7 @@ updatePortuguese.addEventListener("click", languagePTBR);
 let reloadPage = document.querySelector("#reload");
 reloadPage.addEventListener("click", loadPage);
 
-let favoriteCity = document.querySelector("#favorite");
+let favoriteCity = document.querySelector("#add-favorite");
 favoriteCity.addEventListener("click", addfavoriteCity);
 
 document.querySelector("#show-fav").style.display = "none";
@@ -613,6 +647,9 @@ document.querySelector("#favorite-page").style.display = "none";
 
 let backFisrtPage = document.querySelector("#show-start");
 backFisrtPage.addEventListener("click", showFirstPage);
+
+let seeFavoriteList = document.querySelector("#favorite");
+seeFavoriteList.style.color = "#393E46";
 
 (function tick() {
   let timeUpdate = document.querySelector("#updated");
