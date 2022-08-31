@@ -317,6 +317,49 @@ function cityWeatherData(response) {
   pageUpdate();
 }
 
+function favoriteWeatherData(response) {
+  let cityDescription = `${response.data.name}, ${response.data.sys.country}`;
+  let weatherDescription = response.data.weather[0].description;
+  let temp = Math.round(response.data.main.temp);
+  let tempMax = Math.round(response.data.main.temp_max);
+  let tempMin = Math.round(response.data.main.temp_min);
+  let iconWeather = iconChoice(response.data.weather[0].icon);
+
+  document.querySelector("#start-page").style.display = "none";
+  document.querySelector("#favorite-page").style.display = "block";
+
+  let pageFavorites = document.querySelector("#fvorite-cities");
+
+  pageFavorites.innerHTML =
+    pageFavorites.innerHTML +
+    `  
+   <div class="col">
+      <div class="card mb-3 favorite" style="max-width: 220px">
+        <div class="card-body">
+          <h6>${cityDescription}</h6>
+          <div class="row f-1">
+            <div class="col-9 current-temp-favorites">
+              <span class="forecast-symbol">
+                ${iconWeather}
+              </span>
+              <span class="temperature">${temp}</span>
+              <span class="unit">°C</span> |
+            </div>
+            <div class="col-3 max-min-temp-favorites">
+              <span class="temperature">${tempMax}</span>
+              <span class="unit">°C</span>
+              <div class="minimal-temp">
+                <span class="temperature">${tempMin}</span>
+                <span class="unit">°C</span>
+              </div>
+            </div>
+          </div>
+          <div class="fav-description">${weatherDescription}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
 function currentInfoByCoords(location) {
   let lat = location.coords.latitude;
   let lon = location.coords.longitude;
@@ -337,6 +380,17 @@ function currentInfoByCity(cityName) {
   let completeUrl = `${apiUrlStart} ${cityName}&lang=${language}&appid=${apiWeatherKey}&units=${units}`;
 
   axios.get(completeUrl).then(cityWeatherData);
+}
+
+function currentInfoFavorites() {
+  favoriteList.forEach(function (favoriteCity) {
+    let apiWeatherKey = "951b5746581fed4443760487ebb7e1e0";
+    let apiUrlStart = "https://api.openweathermap.org/data/2.5/weather?q=";
+    let units = "metric";
+    let completeUrl = `${apiUrlStart} ${favoriteCity}&lang=${language}&appid=${apiWeatherKey}&units=${units}`;
+
+    axios.get(completeUrl).then(favoriteWeatherData);
+  });
 }
 
 function timeFormatTwelve(date) {
@@ -416,8 +470,10 @@ function pageUpdate() {
   let year = cityDate.getFullYear();
   let hours = twoDigitsNumber(cityDate.getHours());
 
-  let greetings = document.querySelector(".greetings");
-  greetings.innerHTML = selectGreeting(now.getHours());
+  let greetings = document.querySelectorAll(".greetings");
+  greetings.forEach(function (greeting) {
+    greeting.innerHTML = selectGreeting(now.getHours());
+  });
 
   let minutes = twoDigitsNumber(cityDate.getMinutes());
 
@@ -499,14 +555,29 @@ function loadPage() {
   currentInfoByCity(cityName);
 }
 
-function addFavouriteCity() {
-  //${cityName} is now a favourite city, if you look for a new city the weather for ${cityName} will be avaliable using the arrow
+function addfavoriteCity() {
+  document.querySelector("#show-fav").style.display = "block";
+  if (favoriteList.length >= 3) {
+    //sorry maximum 4 favorites
+  } else {
+    favoriteList.push(cityName);
+    console.log(favoriteList);
+    //${cityName} is now a favorite city, if you look for a new city the weather for ${cityName} will be avaliable using the arrow
+  }
+}
+
+function showFirstPage() {
+  document.querySelector("#favorite-page").style.display = "none";
+  let pageFavorites = document.querySelector("#fvorite-cities");
+  pageFavorites.innerHTML = ``;
+  document.querySelector("#start-page").style.display = "block";
 }
 
 var now = new Date(); //current date global variable
 var cityDate = new Date(); //caity date global variable
 var language = "en"; //english by default
 var cityName = "Rio de Janeiro"; //Rio de Janeiro by default
+var favoriteList = [];
 
 currentInfoByCity(cityName);
 
@@ -530,8 +601,18 @@ updatePortuguese.addEventListener("click", languagePTBR);
 let reloadPage = document.querySelector("#reload");
 reloadPage.addEventListener("click", loadPage);
 
-let favouriteCity = document.querySelector("#favourite");
-favouriteCity.addEventListener("click", addFavouriteCity);
+let favoriteCity = document.querySelector("#favorite");
+favoriteCity.addEventListener("click", addfavoriteCity);
+
+document.querySelector("#show-fav").style.display = "none";
+
+let showfavoriteCity = document.querySelector("#show-fav");
+showfavoriteCity.addEventListener("click", currentInfoFavorites);
+
+document.querySelector("#favorite-page").style.display = "none";
+
+let backFisrtPage = document.querySelector("#show-start");
+backFisrtPage.addEventListener("click", showFirstPage);
 
 (function tick() {
   let timeUpdate = document.querySelector("#updated");

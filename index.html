@@ -46,154 +46,187 @@
     <div class="container">
       <!-- to wrap the code -->
       <div class="window-1">
-        <header>
-          <h1>
-            <div class="row w-1 g-1">
-              <div class="col-3 greetings">Greetings</div>
-              <div class="col-7">
-                <div class="row w-1 g-2">
-                  <div class="col-auto">
-                    <button id="geolocation" type="current-location">
-                      <i class="fa-solid fa-location-dot"></i>
-                    </button>
-                  </div>
-
-                  <div class="col-auto">
-                    <form id="search-city">
-                      <input
-                        type="text"
-                        placeholder="Search for city..."
-                        autocomplete="off"
-                        autofocus="true"
-                        id="city-name"
-                      />
-                      <button type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+        <div id="start-page">
+          <header>
+            <h1>
+              <div class="row w-1 g-1">
+                <div class="col-3 greetings">Greetings</div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                  <div class="row w-1 g-2">
+                    <div class="col-auto">
+                      <button id="geolocation" type="current-location">
+                        <i class="fa-solid fa-location-dot"></i>
                       </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-1">
-                <span id="favourite">
-                  <i class="fa-solid fa-star"></i>
-                </span>
-              </div>
-              <div class="col-1">
-                <span class="select-language">
-                  <i class="fa-solid fa-globe"></i>
-                  <ul class="language">
-                    <li>
-                      <a
-                        href="#"
-                        id="english"
-                        title="English (USA)"
-                        class="language-1"
-                      >
-                        <img src="images/us.svg" width="30px" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        id="french"
-                        title="Français (France)"
-                        class="language-2"
-                      >
-                        <img src="images/fr.svg" width="30px" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        id="pt-br"
-                        title="Português (Brasil)"
-                        class="language-3"
-                      >
-                        <img src="images/br.svg" width="30px" />
-                      </a>
-                    </li>
-                  </ul>
-                </span>
-              </div>
-            </div>
-          </h1>
-        </header>
-
-        <div class="window-2">
-          <div class="row g-1">
-            <div class="col-6">
-              <h2>
-                <div id="city-forecast">City</div>
-              </h2>
-              <h3>
-                <div id="day-id">Weekday, DD Month YYYY</div>
-                <div class="time-format">
-                  <span id="time-military">HHhMM </span>
-                  <span class="equivalent-time">
-                    &emsp; <i class="fa-solid fa-arrows-left-right"></i> &emsp;
-                  </span>
-                  <span id="time-twelve"> H:MM AM</span>
-                </div>
-              </h3>
-            </div>
-            <div class="col-6">
-              <div class="row w-1">
-                <div class="col-4">
-                  <div id="icon-prevision" class="col-4 symbol-prevision">
-                    <i class="fa-solid fa-circle-question"></i>
-                  </div>
-                </div>
-
-                <div class="col-8">
-                  <h4>
-                    <span class="main-temp-value">
-                      <span id="current-main-temperature" class="temperature">
-                        29
-                      </span>
-                    </span>
-                    <span class="main-temp-unit">
-                      <span id="celsius-link" class="celsius"> °C</span> |
-                      <span id="fahrenheit-link" class="fahrenheit">°F</span>
-                    </span>
-                  </h4>
-
-                  <h5 class="info-current-day">
-                    <div id="weather-description" class="day-description">
-                      Sunny
                     </div>
-                    Max:
-                    <span id="current-max-temperature" class="temperature">
-                      32</span
-                    >
-                    <span class="unit">°C</span>&ensp; Min:
-                    <span id="current-min-temperature" class="temperature">
-                      25
-                    </span>
-                    <span class="unit">°C</span> <br />
 
-                    <i class="wi wi-humidity"> </i>
-                    <span id="humidity"> 15 </span> % &emsp;
-                    <i class="fa-solid fa-wind"></i>
-                    <span id="current-wind" class="value-wind"> 14 </span>
-                    <span class="unit-wind">km/h</span>
-                  </h5>
+                    <div class="col-auto">
+                      <form id="search-city">
+                        <input
+                          type="text"
+                          placeholder="Search for city..."
+                          autocomplete="off"
+                          autofocus="true"
+                          id="city-name"
+                        />
+                        <button type="submit">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-1">
+                  <span id="favorite" class="favorite-list" list>
+                    <i class="fa-solid fa-star"></i>
+                    <ul class="list-favorite-city">
+                      <li id="city-1">City 1</li>
+                      <li id="city-2">City 2</li>
+                      <li id="city-3">City 3</li>
+                    </ul>
+                  </span>
+                </div>
+                <div class="col-1">
+                  <span class="select-language">
+                    <i class="fa-solid fa-globe"></i>
+                    <ul class="language">
+                      <li>
+                        <a
+                          href="#"
+                          id="english"
+                          title="English (USA)"
+                          class="language-1"
+                        >
+                          <img src="images/us.svg" width="30px" />
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          id="french"
+                          title="Français (France)"
+                          class="language-2"
+                        >
+                          <img src="images/fr.svg" width="30px" />
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          id="pt-br"
+                          title="Português (Brasil)"
+                          class="language-3"
+                        >
+                          <img src="images/br.svg" width="30px" />
+                        </a>
+                      </li>
+                    </ul>
+                  </span>
+                </div>
+              </div>
+            </h1>
+          </header>
+
+          <div class="window-2">
+            <div class="row g-1">
+              <div class="col-6">
+                <h2>
+                  <div id="city-forecast">City</div>
+                </h2>
+                <h3>
+                  <div id="day-id">Weekday, DD Month YYYY</div>
+                  <div class="time-format">
+                    <span id="time-military">HHhMM </span>
+                    <span class="equivalent-time">
+                      &emsp;
+                      <i class="fa-solid fa-arrows-left-right"></i> &emsp;
+                    </span>
+                    <span id="time-twelve"> H:MM AM</span>
+                  </div>
+                </h3>
+              </div>
+              <div class="col-6">
+                <div class="row w-1">
+                  <div class="col-4">
+                    <div id="icon-prevision" class="col-4 symbol-prevision">
+                      <i class="fa-solid fa-circle-question"></i>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <h4>
+                      <span class="main-temp-value">
+                        <span id="current-main-temperature" class="temperature">
+                          29
+                        </span>
+                      </span>
+                      <span class="main-temp-unit">
+                        <span id="celsius-link" class="celsius"> °C</span> |
+                        <span id="fahrenheit-link" class="fahrenheit">°F</span>
+                      </span>
+                    </h4>
+
+                    <h5 class="info-current-day">
+                      <div id="weather-description" class="day-description">
+                        Sunny
+                      </div>
+                      Max:
+                      <span id="current-max-temperature" class="temperature">
+                        32</span
+                      >
+                      <span class="unit">°C</span>&ensp; Min:
+                      <span id="current-min-temperature" class="temperature">
+                        25
+                      </span>
+                      <span class="unit">°C</span> <br />
+
+                      <i class="wi wi-humidity"> </i>
+                      <span id="humidity"> 15 </span> % &emsp;
+                      <i class="fa-solid fa-wind"></i>
+                      <span id="current-wind" class="value-wind"> 14 </span>
+                      <span class="unit-wind">km/h</span>
+                    </h5>
+                  </div>
+                  <div class="col-2 show-favorites">
+                    <a href="#" id="show-fav" title="See Favorites">
+                      <i class="fa-solid fa-circle-arrow-right"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div id="forecast" class="row window-3">test</div>
+
+          <p>
+            <a href="#" id="reload">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </a>
+            &ensp;
+            <small><span id="updated">Last updated: X min ago</span></small>
+          </p>
         </div>
 
-        <div id="forecast" class="row window-3">test</div>
+        <div id="favorite-page">
+          <h1>
+            <div class="row fav g-1">
+              <div class="col-2">
+                <div class="back-start">
+                  <a href="#" id="show-start" title="Back to first Page">
+                    <i class="fa-solid fa-circle-arrow-left"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="col-7">Favorite Cities</div>
 
-        <p>
-          <a href="#" id="reload">
-            <i class="fa-solid fa-arrows-rotate"></i>
-          </a>
-          &ensp;
-          <small><span id="updated">Last updated: X min ago</span></small>
-        </p>
+              <div class="col-3 greetings">Greetings</div>
+            </div>
+          </h1>
+          <div id="fvorite-cities" class="row window-4"></div>
+        </div>
+
         <footer>
           <a
             href="https://github.com/svirote/weather-app"

@@ -27,9 +27,10 @@ footer {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 26px;
   margin: 15px auto;
-  padding: 0 0 0 30px;
+  padding: 0;
+  text-align: center;
 }
 
 h2 {
@@ -55,6 +56,11 @@ h5 {
   font-size: 20px;
 }
 
+h6 {
+  text-align: left;
+  font-size: 25px;
+}
+
 input,
 textarea {
   background: transparent;
@@ -73,11 +79,24 @@ p {
   margin: 0 auto;
 }
 
+.back-start {
+  text-align: left;
+  font-size: 32px;
+}
+
+.card.favorite {
+  border: 6px solid #eeeeee;
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+  background: #222831;
+  padding: 2px;
+}
+
 .card.prevision {
   border: 3px solid #eeeeee;
   display: block;
   margin: 5px auto;
-  box-shadow: rgb(54, 48, 98, 0.3) 0px 8px 8px 0;
   background-color: rgb(255, 255, 255, 0);
 }
 
@@ -86,9 +105,21 @@ p {
   color: #565d68;
 }
 
+.current-temp-favorites {
+  font-size: 30px;
+  text-align: right;
+  padding: 2px;
+}
+
 .day-description {
   color: #ffd369;
   font-style: italic;
+}
+
+.fav-description {
+  color: #ffd369;
+  font-style: italic;
+  text-align: center;
 }
 
 .equivalent-time {
@@ -104,6 +135,12 @@ p {
 .fa-arrows-rotate:hover {
   color: #ffd369;
   cursor: pointer;
+}
+
+.favorite-list:hover .list-favorite-city {
+  display: block;
+  background-color: rgb(86, 93, 104, 0.3);
+  border-radius: 10px;
 }
 
 .forecast-symbol {
@@ -125,6 +162,18 @@ p {
   position: absolute;
 }
 
+.list-favorite-city {
+  display: none;
+  padding: 10px;
+  position: absolute;
+}
+
+.max-min-temp-favorites {
+  text-align: left;
+  padding: 5px 2px;
+  font-size: 13px;
+}
+
 .minimal-temp {
   color: #565d68;
 }
@@ -139,6 +188,13 @@ p {
   display: block;
   background-color: rgb(86, 93, 104, 0.3);
   border-radius: 10px;
+}
+
+.show-favorites {
+  color: #565d68;
+  text-align: center;
+  font-size: 32px;
+  padding: 40px 0;
 }
 
 .symbol-prevision {
@@ -166,4 +222,8 @@ p {
 
 .window-3 {
   padding: 0 60px;
+}
+
+.window-4 {
+  padding: 40px 50px;
 }
