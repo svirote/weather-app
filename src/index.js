@@ -571,33 +571,88 @@ function addfavoriteCity() {
     favoriteCity.title = "You already have 3 favorite cities";
     favoriteCity.style.color = "#393E46";
   }
-  //${cityName} is now a favorite city, if you look for a new city the weather for ${cityName} will be avaliable using the arrow
 }
 
-//finish
-function manageFavoriteList() {
-  favoriteList.forEach(function (favoriteCity) {
-    let listOfFavorites = document.querySelector("#list-of-favorites");
+function noFavoritesLeft() {
+  document.querySelector("#favorite").style.color = "#393E46";
+  document.querySelector("#show-fav").style.display = "none";
+  document.querySelector("#favorite-page").style.display = "none";
+}
 
+function deleteCity(stringToDelete, cityToDelete) {
+  stringToDelete.remove();
+  let tempFavoriteList = [];
+
+  if (favoriteList.length === 3) {
+    let favoriteCity = document.querySelector("#add-favorite");
+
+    favoriteCity.addEventListener("click", addfavoriteCity);
+    favoriteCity.classList.add("favorite-symbol");
+    favoriteCity.title = "Add to favorite list";
+    favoriteCity.style.color = "#eeeeee";
+  }
+
+  favoriteList.forEach(function (favoriteCity) {
+    if (favoriteCity === cityToDelete) {
+    } else {
+      tempFavoriteList.push(favoriteCity);
+    }
+  });
+
+  favoriteList = tempFavoriteList;
+
+  if (favoriteList.length === 0) {
+    noFavoritesLeft();
+  }
+}
+
+function preparationDeleteCity1() {
+  let stringToDelete = document.querySelector("#fav-0");
+  let cityToDelete = document.querySelector("#fav-city-0").innerHTML;
+  deleteCity(stringToDelete, cityToDelete);
+}
+
+function preparationDeleteCity2() {
+  let stringToDelete = document.querySelector("#fav-1");
+  let cityToDelete = document.querySelector("#fav-city-1").innerHTML;
+  deleteCity(stringToDelete, cityToDelete);
+}
+function preparationDeleteCity3() {
+  let stringToDelete = document.querySelector("#fav-2");
+  let cityToDelete = document.querySelector("#fav-city-2").innerHTML;
+  deleteCity(stringToDelete, cityToDelete);
+}
+
+function manageFavoriteList() {
+  let listOfFavorites = document.querySelector("#list-of-favorites");
+  listOfFavorites.innerHTML = "";
+  favoriteList.forEach(function (favoriteCity, index) {
     listOfFavorites.innerHTML =
       listOfFavorites.innerHTML +
       `
-      <div class="favorite-city">
-         ${favoriteCity}
-        <button class="removal" type="submit">
+      <div id="fav-${index}" class="favorite-city">
+        <span id="fav-city-${index}">${favoriteCity}</span>
+        <span id="remove-${index}" class="delete-${index}">
           <i class="fa-solid fa-circle-xmark"></i>
-          <i class="fa-solid fa-circle-minus"></i>
-        </button>
+        </span>
       </div>
       `;
   });
-}
 
-//finish
-function directAddFavoriteCity(event) {
-  event.preventDefault();
-  let newFavorite = document.querySelector("#fav-1");
-  console.log(newFavorite);
+  if (favoriteList.length >= 1) {
+    let removeCity1 = document.querySelector("#remove-0");
+    removeCity1.addEventListener("click", preparationDeleteCity1);
+  }
+
+  if (favoriteList.length >= 2) {
+    let removeCity2 = document.querySelector("#remove-1");
+    removeCity2.addEventListener("click", preparationDeleteCity2);
+  }
+
+  if (favoriteList.length >= 3) {
+    let removeCity3 = document.querySelector("#remove-2");
+    removeCity3.addEventListener("click", preparationDeleteCity3);
+  }
 }
 
 function showFirstPage() {
@@ -638,18 +693,15 @@ reloadPage.addEventListener("click", loadPage);
 let favoriteCity = document.querySelector("#add-favorite");
 favoriteCity.addEventListener("click", addfavoriteCity);
 
-document.querySelector("#show-fav").style.display = "none";
-
 let showfavoriteCity = document.querySelector("#show-fav");
 showfavoriteCity.addEventListener("click", currentInfoFavorites);
-
-document.querySelector("#favorite-page").style.display = "none";
 
 let backFisrtPage = document.querySelector("#show-start");
 backFisrtPage.addEventListener("click", showFirstPage);
 
-let seeFavoriteList = document.querySelector("#favorite");
-seeFavoriteList.style.color = "#393E46";
+noFavoritesLeft();
+
+//
 
 (function tick() {
   let timeUpdate = document.querySelector("#updated");

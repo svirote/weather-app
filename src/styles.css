@@ -122,14 +122,18 @@ p {
   font-style: italic;
 }
 
+.equivalent-time {
+  font-size: 15px;
+}
+
+.fa-circle-xmark {
+  color: #b85252;
+}
+
 .fav-description {
   color: #ffd369;
   font-style: italic;
   text-align: center;
-}
-
-.equivalent-time {
-  font-size: 15px;
 }
 
 .fa-location-dot:hover,
@@ -143,7 +147,7 @@ p {
   cursor: pointer;
 }
 
-.favorite-list:hover .list-favorite-city {
+.favorite-list:hover .list-fav-city {
   display: block;
   background-color: rgb(86, 93, 104, 0.3);
   border-radius: 10px;
@@ -168,12 +172,13 @@ p {
   position: absolute;
 }
 
-.list-favorite-city {
+.list-fav-city {
   display: none;
   padding: 10px;
   position: absolute;
   font-family: "Kalam", cursive;
   font-size: 18px;
+  text-align: right;
 }
 
 .max-min-temp-favorites {
@@ -190,10 +195,6 @@ p {
   font-size: 20px;
   position: relative;
   top: -27px;
-}
-
-.removal {
-  color: #b85252;
 }
 
 .select-language:hover .language {
