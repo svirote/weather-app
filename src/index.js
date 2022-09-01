@@ -514,7 +514,16 @@ function search(event) {
   } else {
     let page = document.querySelector(".window-1");
     let iconWeater = `<i class="fa-solid fa-circle-question"></i>`;
-    page.innerHTML = `${iconWeater} Oh no! <br/> You didn't select a city. <br/>  Please reload the page.`; //translate
+
+    if (language === "en") {
+      page.innerHTML = `${iconWeater} Oh no! <br/> You didn't select a city. <br/> Please reload the page.`;
+    }
+    if (language === "fr") {
+      page.innerHTML = `${iconWeater} Oh no! <br/> Vous n'avez pas selectionné(e) une ville. <br/> Merci de actualiser la page.`;
+    }
+    if (language === "pt_br") {
+      page.innerHTML = `${iconWeater} Oh no! <br/> Você não selecionou uma cidade. <br/> Por favor, recarregue a pagina.`;
+    }
   }
 }
 
@@ -535,7 +544,8 @@ function languageEN() {
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "block";
   document.querySelector("#city-name").placeholder = "Search for city...";
-  //change last updated
+  document.querySelector("#favorite-title").innerHTML =
+    "Your list of favorites:";
 }
 
 function languageFR() {
@@ -545,7 +555,8 @@ function languageFR() {
   document.querySelector(".language-2").style.display = "none";
   document.querySelector(".language-3").style.display = "block";
   document.querySelector("#city-name").placeholder = "Recherche par ville...";
-  //change last updated
+  document.querySelector("#favorite-title").innerHTML =
+    "Votre liste de favorits:";
 }
 
 function languagePTBR() {
@@ -555,7 +566,8 @@ function languagePTBR() {
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "none";
   document.querySelector("#city-name").placeholder = "Procurar por cidade...";
-  //change last updated
+  document.querySelector("#favorite-title").innerHTML =
+    "Sua lista de favoritos: ";
 }
 
 function loadPage() {
@@ -570,11 +582,33 @@ function blockFavoriteButton(string) {
   favoriteCity.style.color = "#393E46";
 
   if (string === "full") {
-    favoriteCity.title = "You already have 3 favorite cities";
+    if (language === "en") {
+      document.querySelector("#add-favorite").title =
+        "You already have 3 favorite cities !";
+    }
+    if (language === "fr") {
+      document.querySelector("#add-favorite").title =
+        "Vous avez déjà 3 villes favorites !";
+    }
+    if (language === "pt_br") {
+      document.querySelector("#add-favorite").title =
+        "Você já favoritou 3 cidades !";
+    }
   }
 
   if (string === "exists") {
-    favoriteCity.title = "This city is already favorite";
+    if (language === "en") {
+      document.querySelector("#add-favorite").title =
+        "This city is already a favorite !";
+    }
+    if (language === "fr") {
+      document.querySelector("#add-favorite").title =
+        "Cette ville est déjà une favorit !";
+    }
+    if (language === "pt_br") {
+      document.querySelector("#add-favorite").title =
+        "Esta cidade já é favorita!";
+    }
   }
 }
 
@@ -585,6 +619,18 @@ function showFavoriteButton() {
   favoriteCity.classList.add("favorite-symbol");
   favoriteCity.title = "Add to favorite list";
   favoriteCity.style.color = "#eeeeee";
+
+  if (language === "en") {
+    document.querySelector("#add-favorite").title = "Add to favorites";
+  }
+
+  if (language === "fr") {
+    document.querySelector("#add-favorite").title = "Rajouter aux favorits";
+  }
+
+  if (language === "pt_br") {
+    document.querySelector("#add-favorite").title = "Adicionar aos favoritos";
+  }
 }
 
 function addfavoriteCity() {
@@ -730,8 +776,7 @@ backFisrtPage.addEventListener("click", showFirstPage);
 
 noFavoritesLeft();
 
-//
-
+// Local function to count the last update invoked right away
 (function tick() {
   let timeUpdate = document.querySelector("#updated");
   let diff = Math.abs(new Date(now) - new Date()); // difference miliseconds between now and last refresh
@@ -747,6 +792,6 @@ noFavoritesLeft();
     timeUpdate.innerHTML = `Atualizado faz ${passedMinutes} min`;
   }
   window.setTimeout(tick, 1000);
-})(); // Local function to count the last update invoked right away
+})();
 
 // `Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+ ${citySearch}`
