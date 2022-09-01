@@ -313,6 +313,14 @@ function cityWeatherData(response) {
 
   cityName = response.data.name;
 
+  favoriteList.forEach(function (favoriteCity) {
+    if (favoriteCity === cityName) {
+      blockFavoriteButton("exists");
+    } else {
+      showFavoriteButton();
+    }
+  });
+
   retrieveForecast(lat, lon);
   pageUpdate();
 }
@@ -506,7 +514,7 @@ function search(event) {
   } else {
     let page = document.querySelector(".window-1");
     let iconWeater = `<i class="fa-solid fa-circle-question"></i>`;
-    page.innerHTML = `${iconWeater} Oh no! <br/> You didn't select a city. <br/>  Please reload the page.`;
+    page.innerHTML = `${iconWeater} Oh no! <br/> You didn't select a city. <br/>  Please reload the page.`; //translate
   }
 }
 
@@ -554,22 +562,43 @@ function loadPage() {
   currentInfoByCity(cityName);
 }
 
-//finish
+function blockFavoriteButton(string) {
+  let favoriteCity = document.querySelector("#add-favorite");
+
+  favoriteCity.removeEventListener("click", addfavoriteCity);
+  favoriteCity.classList.remove("favorite-symbol");
+  favoriteCity.style.color = "#393E46";
+
+  if (string === "full") {
+    favoriteCity.title = "You already have 3 favorite cities";
+  }
+
+  if (string === "exists") {
+    favoriteCity.title = "This city is already favorite";
+  }
+}
+
+function showFavoriteButton() {
+  let favoriteCity = document.querySelector("#add-favorite");
+
+  favoriteCity.addEventListener("click", addfavoriteCity);
+  favoriteCity.classList.add("favorite-symbol");
+  favoriteCity.title = "Add to favorite list";
+  favoriteCity.style.color = "#eeeeee";
+}
+
 function addfavoriteCity() {
   document.querySelector("#show-fav").style.display = "block";
 
+  blockFavoriteButton("exists");
   favoriteList.push(cityName);
   manageFavoriteList();
+
   let seeFavoriteList = document.querySelector("#favorite");
   seeFavoriteList.style.color = "#eeeeee";
 
   if (favoriteList.length === 3) {
-    let favoriteCity = document.querySelector("#add-favorite");
-
-    favoriteCity.removeEventListener("click", addfavoriteCity);
-    favoriteCity.classList.remove("favorite-symbol");
-    favoriteCity.title = "You already have 3 favorite cities";
-    favoriteCity.style.color = "#393E46";
+    blockFavoriteButton("full");
   }
 }
 
@@ -583,15 +612,6 @@ function deleteCity(stringToDelete, cityToDelete) {
   stringToDelete.remove();
   let tempFavoriteList = [];
 
-  if (favoriteList.length === 3) {
-    let favoriteCity = document.querySelector("#add-favorite");
-
-    favoriteCity.addEventListener("click", addfavoriteCity);
-    favoriteCity.classList.add("favorite-symbol");
-    favoriteCity.title = "Add to favorite list";
-    favoriteCity.style.color = "#eeeeee";
-  }
-
   favoriteList.forEach(function (favoriteCity) {
     if (favoriteCity === cityToDelete) {
     } else {
@@ -601,9 +621,17 @@ function deleteCity(stringToDelete, cityToDelete) {
 
   favoriteList = tempFavoriteList;
 
-  if (favoriteList.length === 0) {
-    noFavoritesLeft();
-  }
+  favoriteList.forEach(function (favoriteCity) {
+    if (favoriteCity === cityName) {
+      blockFavoriteButton("exists");
+    } else {
+      if (favoriteList.length === 0) {
+        noFavoritesLeft();
+      } else {
+        showFavoriteButton();
+      }
+    }
+  });
 }
 
 function preparationDeleteCity1() {
@@ -617,6 +645,7 @@ function preparationDeleteCity2() {
   let cityToDelete = document.querySelector("#fav-city-1").innerHTML;
   deleteCity(stringToDelete, cityToDelete);
 }
+
 function preparationDeleteCity3() {
   let stringToDelete = document.querySelector("#fav-2");
   let cityToDelete = document.querySelector("#fav-city-2").innerHTML;
