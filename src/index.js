@@ -457,6 +457,10 @@ function currentInfoByCity(cityName) {
   axios.get(completeUrl).then(cityWeatherData);
 }
 
+function loadPage() {
+  currentInfoByCity(cityName);
+}
+
 function currentInfoFavorites() {
   favoriteList.forEach(function (favoriteCity) {
     let apiWeatherKey = "951b5746581fed4443760487ebb7e1e0";
@@ -681,10 +685,6 @@ function languagePTBR() {
   document.querySelector("#city-name").placeholder = "Procurar por cidade...";
   document.querySelector("#favorite-title").innerHTML =
     "Sua lista de favoritos: ";
-}
-
-function loadPage() {
-  currentInfoByCity(cityName);
 }
 
 function blockFavoriteButton(string) {
