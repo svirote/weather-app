@@ -333,8 +333,29 @@ function favoriteWeatherData(response) {
   let tempMin = Math.round(response.data.main.temp_min);
   let iconWeather = iconChoice(response.data.weather[0].icon);
 
+  let cityOffset = response.data.timezone / 3600; //Time zone city to UTC in hours
+  let userOffset = now.getTimezoneOffset() / 60; // Time zone user to UTC in hours
+  let diffHours = cityOffset + userOffset;
+
+  let favoriteCityDate = new Date();
+  favoriteCityDate.setTime(
+    favoriteCityDate.getTime() + diffHours * 60 * 60 * 1000
+  );
+
   document.querySelector("#start-page").style.display = "none";
   document.querySelector("#favorite-page").style.display = "block";
+
+  let favoriteDate = "";
+
+  if (language === "en") {
+    favoriteDate = formatedDateEN(favoriteCityDate, "partial");
+  }
+  if (language === "fr") {
+    favoriteDate = formatedDateFR(favoriteCityDate, "partial");
+  }
+  if (language === "pt_br") {
+    favoriteDate = formatedDatePTBR(favoriteCityDate, "partial");
+  }
 
   let pageFavorites = document.querySelector("#fvorite-cities");
 
@@ -363,6 +384,12 @@ function favoriteWeatherData(response) {
             </div>
           </div>
           <div class="fav-description">${weatherDescription}</div>
+        </div>
+        <div class="header"> ${favoriteDate} <br />
+          ${timeFormatMilitary(favoriteCityDate)} &ensp;
+          <i class="fa-solid fa-arrows-left-right"></i> &ensp; 
+          ${timeFormatTwelve(favoriteCityDate)}
+         
         </div>
       </div>
     </div>`;
@@ -409,6 +436,13 @@ function timeFormatTwelve(date) {
   });
 
   return hourTwelveFormat;
+}
+
+function timeFormatMilitary(date) {
+  let hours = twoDigitsNumber(date.getHours());
+  let minutes = twoDigitsNumber(date.getMinutes());
+
+  return `${hours}h${minutes}`;
 }
 
 function formatedDateSelection() {
@@ -474,22 +508,18 @@ function retrieveForecast(lat, lon) {
 
 function pageUpdate() {
   now = new Date(); //current date
-
   let year = cityDate.getFullYear();
-  let hours = twoDigitsNumber(cityDate.getHours());
 
   let greetings = document.querySelectorAll(".greetings");
   greetings.forEach(function (greeting) {
     greeting.innerHTML = selectGreeting(now.getHours());
   });
 
-  let minutes = twoDigitsNumber(cityDate.getMinutes());
-
   let dayId = document.querySelector("#day-id");
   dayId.innerHTML = `${formatedDateSelection()} ${year}`;
 
   let timeMilitary = document.querySelector("#time-military");
-  timeMilitary.innerHTML = `${hours}h${minutes}`;
+  timeMilitary.innerHTML = timeFormatMilitary(cityDate);
 
   let timeTwelve = document.querySelector("#time-twelve");
   timeTwelve.innerHTML = timeFormatTwelve(cityDate);
@@ -516,14 +546,27 @@ function search(event) {
     let iconWeater = `<i class="fa-solid fa-circle-question"></i>`;
 
     if (language === "en") {
-      page.innerHTML = `${iconWeater} Oh no! <br/> You didn't select a city. <br/> Please reload the page.`;
+      message = `<h1> ${iconWeater} Oh no! <br/> You didn't select a city. <br/> Please reload the page.</h1>`;
     }
     if (language === "fr") {
-      page.innerHTML = `${iconWeater} Oh no! <br/> Vous n'avez pas selectionné(e) une ville. <br/> Merci de actualiser la page.`;
+      message = `<h1>${iconWeater} Oh no! <br/> Vous n'avez pas selectionné(e) une ville. <br/> Merci de actualiser la page.</h1>`;
     }
     if (language === "pt_br") {
-      page.innerHTML = `${iconWeater} Oh no! <br/> Você não selecionou uma cidade. <br/> Por favor, recarregue a pagina.`;
+      message = `<h1>${iconWeater} Oh no! <br/> Você não selecionou uma cidade. <br/> Por favor, recarregue a pagina.</h1>`;
     }
+
+    page.innerHTML =
+      message +
+      `<footer>
+          <a
+            href="https://github.com/svirote/weather-app"
+            target="_blank"
+            title="GitHub Suelen Virote"
+          >
+            Open-source code</a
+          >
+          by Suelen Virote
+        </footer>`;
   }
 }
 
