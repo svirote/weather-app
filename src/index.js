@@ -385,7 +385,7 @@ function favoriteWeatherData(response) {
           </div>
           <div class="fav-description">${weatherDescription}</div>
         </div>
-        <div class="header"> ${favoriteDate} <br />
+        <div class="header"> ${favoriteDate}  |
           ${timeFormatMilitary(favoriteCityDate)} &ensp;
           <i class="fa-solid fa-arrows-left-right"></i> &ensp; 
           ${timeFormatTwelve(favoriteCityDate)}
