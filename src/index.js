@@ -175,8 +175,9 @@ function mphkmh(speed) {
   return Math.round(speed * 1.609);
 }
 
-function changeUnit(event) {
-  let newUnit = event.target.innerHTML;
+function unitImperial(event) {
+  let newUnit = "°F";
+  currentUnit = "imperial";
 
   let temperatureUnity = document.querySelectorAll(".unit");
   temperatureUnity.forEach(
@@ -186,42 +187,55 @@ function changeUnit(event) {
   let windUnity = document.querySelectorAll(".unit-wind");
   let tempValue = document.querySelectorAll(".temperature");
   let windValue = document.querySelectorAll(".value-wind");
-
   let celsiusLink = document.querySelector("#celsius-link");
   let fahrenheitLink = document.querySelector("#fahrenheit-link");
 
-  if (newUnit === "°F") {
-    tempValue.forEach(
-      (tempValue) => (tempValue.innerText = fahrenheitTemp(tempValue.innerText))
-    );
-    windValue.forEach(
-      (windValue) => (windValue.innerText = kmhmph(windValue.innerText))
-    );
-    windUnity.forEach((windUnity) => (windUnity.innerText = "mph"));
+  tempValue.forEach(
+    (tempValue) => (tempValue.innerText = fahrenheitTemp(tempValue.innerText))
+  );
+  windValue.forEach(
+    (windValue) => (windValue.innerText = kmhmph(windValue.innerText))
+  );
+  windUnity.forEach((windUnity) => (windUnity.innerText = "mph"));
 
-    //allows convertion to fahrenheit
-    celsiusLink.classList.add("celsius");
-    celsiusLink.addEventListener("click", changeUnit);
+  //allows convertion to celsius
+  celsiusLink.classList.add("celsius");
+  celsiusLink.addEventListener("click", unitMetric);
 
-    //blocks convertion to fahrenheit
-    fahrenheitLink.classList.remove("fahrenheit");
-    fahrenheitLink.removeEventListener("click", changeUnit);
-  } else {
-    tempValue.forEach(
-      (tempValue) => (tempValue.innerText = celsiusTemp(tempValue.innerText))
-    );
-    windValue.forEach(
-      (windValue) => (windValue.innerText = mphkmh(windValue.innerText))
-    );
-    windUnity.forEach((windUnity) => (windUnity.innerText = "km/h"));
+  //blocks convertion to fahrenheit
+  fahrenheitLink.classList.remove("fahrenheit");
+  fahrenheitLink.removeEventListener("click", unitImperial);
+}
 
-    //allows convertion to fahrenheit
-    fahrenheitLink.classList.add("fahrenheit");
-    fahrenheitLink.addEventListener("click", changeUnit);
-    //blocks convertion to celsius
-    celsiusLink.classList.remove("celsius");
-    celsiusLink.removeEventListener("click", changeUnit);
-  }
+function unitMetric(event) {
+  let newUnit = "°C";
+  currentUnit = "metric";
+
+  let temperatureUnity = document.querySelectorAll(".unit");
+  temperatureUnity.forEach(
+    (temperatureUnity) => (temperatureUnity.innerText = newUnit)
+  );
+
+  let windUnity = document.querySelectorAll(".unit-wind");
+  let tempValue = document.querySelectorAll(".temperature");
+  let windValue = document.querySelectorAll(".value-wind");
+  let celsiusLink = document.querySelector("#celsius-link");
+  let fahrenheitLink = document.querySelector("#fahrenheit-link");
+
+  tempValue.forEach(
+    (tempValue) => (tempValue.innerText = celsiusTemp(tempValue.innerText))
+  );
+  windValue.forEach(
+    (windValue) => (windValue.innerText = mphkmh(windValue.innerText))
+  );
+  windUnity.forEach((windUnity) => (windUnity.innerText = "km/h"));
+
+  //allows convertion to fahrenheit
+  fahrenheitLink.classList.add("fahrenheit");
+  fahrenheitLink.addEventListener("click", unitImperial);
+  //blocks convertion to celsius
+  celsiusLink.classList.remove("celsius");
+  celsiusLink.removeEventListener("click", unitMetric);
 }
 
 function iconChoice(codeIcon) {
@@ -282,22 +296,32 @@ function cityWeatherData(response) {
 
   let cityOffset = response.data.timezone / 3600; //Time zone city to UTC in hours
   let userOffset = now.getTimezoneOffset() / 60; // Time zone user to UTC in hours
-
   let diffHours = cityOffset + userOffset;
-
   cityDate.setTime(now.getTime() + diffHours * 60 * 60 * 1000);
 
-  let temp = document.querySelector("#current-main-temperature");
-  temp.innerHTML = Math.round(response.data.main.temp);
+  let temp = Math.round(response.data.main.temp);
+  let tempMax = Math.round(response.data.main.temp_max);
+  let tempMin = Math.round(response.data.main.temp_min);
+  let speed = Math.round(response.data.wind.speed);
 
-  let tempMax = document.querySelector("#current-max-temperature");
-  tempMax.innerHTML = Math.round(response.data.main.temp_max);
-
-  let tempMin = document.querySelector("#current-min-temperature");
-  tempMin.innerHTML = Math.round(response.data.main.temp_min);
-
+  let tempText = document.querySelector("#current-main-temperature");
+  let tempMaxText = document.querySelector("#current-max-temperature");
+  let tempMinText = document.querySelector("#current-min-temperature");
   let windSpeed = document.querySelector("#current-wind");
-  windSpeed.innerHTML = Math.round(response.data.wind.speed);
+
+  if (currentUnit === "metric") {
+    tempText.innerHTML = temp;
+    tempMaxText.innerHTML = tempMax;
+    tempMinText.innerHTML = tempMin;
+    windSpeed.innerHTML = speed;
+  }
+
+  if (currentUnit === "imperial") {
+    tempText.innerHTML = fahrenheitTemp(temp);
+    tempMaxText.innerHTML = fahrenheitTemp(tempMax);
+    tempMinText.innerHTML = fahrenheitTemp(tempMin);
+    windSpeed.innerHTML = kmhmph(speed);
+  }
 
   let humidity = document.querySelector("#humidity");
   humidity.innerHTML = Math.round(response.data.main.humidity);
@@ -322,7 +346,6 @@ function cityWeatherData(response) {
   });
 
   retrieveForecast(lat, lon);
-  pageUpdate();
 }
 
 function favoriteWeatherData(response) {
@@ -332,6 +355,18 @@ function favoriteWeatherData(response) {
   let tempMax = Math.round(response.data.main.temp_max);
   let tempMin = Math.round(response.data.main.temp_min);
   let iconWeather = iconChoice(response.data.weather[0].icon);
+  let tempUnit = "";
+
+  if (currentUnit === "metric") {
+    tempUnit = "°C";
+  }
+
+  if (currentUnit === "imperial") {
+    tempUnit = "°F";
+    temp = fahrenheitTemp(temp);
+    tempMax = fahrenheitTemp(tempMax);
+    tempMin = fahrenheitTemp(tempMin);
+  }
 
   let cityOffset = response.data.timezone / 3600; //Time zone city to UTC in hours
   let userOffset = now.getTimezoneOffset() / 60; // Time zone user to UTC in hours
@@ -372,14 +407,14 @@ function favoriteWeatherData(response) {
                 ${iconWeather}
               </span>
               <span class="temperature">${temp}</span>
-              <span class="unit">°C</span> |
+              <span class="unit">${tempUnit}</span> |
             </div>
             <div class="col-3 max-min-temp-favorites">
               <span class="temperature">${tempMax}</span>
-              <span class="unit">°C</span>
+              <span class="unit">${tempUnit}</span>
               <div class="minimal-temp">
                 <span class="temperature">${tempMin}</span>
-                <span class="unit">°C</span>
+                <span class="unit">${tempUnit}</span>
               </div>
             </div>
           </div>
@@ -464,6 +499,20 @@ function showForecast(response) {
   let forecastHTML = "";
 
   forecast.forEach(function (dayInfo, index) {
+    let tempMax = Math.round(dayInfo.temp.max);
+    let tempMin = Math.round(dayInfo.temp.min);
+    let tempUnit = "";
+
+    if (currentUnit === "metric") {
+      tempUnit = "°C";
+    }
+
+    if (currentUnit === "imperial") {
+      tempUnit = "°F";
+      tempMax = fahrenheitTemp(tempMax);
+      tempMin = fahrenheitTemp(tempMin);
+    }
+
     if (index > 0 && index < 6) {
       forecastHTML =
         forecastHTML +
@@ -473,12 +522,12 @@ function showForecast(response) {
               <div class="card-body">
                 <p>
                   <span class="temperature"> 
-                  ${Math.round(dayInfo.temp.max)} </span>
-                  <span class="unit">°C</span> &ensp;
+                  ${tempMax} </span>
+                  <span class="unit">${tempUnit}</span> &ensp;
                   <span class="minimal-temp">
                     <span class="temperature">
-                    ${Math.round(dayInfo.temp.min)}</span>
-                    <span class="unit">°C</span>
+                    ${tempMin}</span>
+                    <span class="unit">${tempUnit}</span>
                   </span>
                 </p>
                 <div class="forecast-symbol">
@@ -493,7 +542,7 @@ function showForecast(response) {
   });
 
   forecastElement.innerHTML = forecastHTML;
-  //console.log(forecastHTML);
+  pageUpdate();
 }
 
 function retrieveForecast(lat, lon) {
@@ -524,12 +573,22 @@ function pageUpdate() {
   let timeTwelve = document.querySelector("#time-twelve");
   timeTwelve.innerHTML = timeFormatTwelve(cityDate);
 
-  let fahrenheitLink = document.querySelector("#fahrenheit-link");
-  fahrenheitLink.addEventListener("click", changeUnit);
-
   let celsiusLink = document.querySelector("#celsius-link");
-  celsiusLink.classList.remove("celsius"); // When Loaded is not possible to convert to celsius
-  celsiusLink.removeEventListener("click", changeUnit);
+  let fahrenheitLink = document.querySelector("#fahrenheit-link");
+
+  if (currentUnit === "metric") {
+    celsiusLink.classList.remove("celsius");
+    celsiusLink.removeEventListener("click", unitMetric);
+    fahrenheitLink.classList.add("fahrenheit");
+    fahrenheitLink.addEventListener("click", unitImperial);
+  }
+
+  if (currentUnit === "imperial") {
+    celsiusLink.classList.add("celsius");
+    celsiusLink.addEventListener("click", unitMetric);
+    fahrenheitLink.classList.remove("fahrenheit");
+    fahrenheitLink.removeEventListener("click", unitImperial);
+  }
 }
 
 function search(event) {
@@ -538,7 +597,7 @@ function search(event) {
   let city = document.querySelector("#city-forecast");
 
   if (searchInput.value) {
-    let city = searchInput.value;
+    city = searchInput.value;
     searchInput.value = null;
     currentInfoByCity(city);
   } else {
@@ -709,16 +768,15 @@ function deleteCity(stringToDelete, cityToDelete) {
   });
 
   favoriteList = tempFavoriteList;
+  showFavoriteButton();
+
+  if (favoriteList.length === 0) {
+    noFavoritesLeft();
+  }
 
   favoriteList.forEach(function (favoriteCity) {
     if (favoriteCity === cityName) {
       blockFavoriteButton("exists");
-    } else {
-      if (favoriteList.length === 0) {
-        noFavoritesLeft();
-      } else {
-        showFavoriteButton();
-      }
     }
   });
 }
@@ -785,6 +843,7 @@ var cityDate = new Date(); //caity date global variable
 var language = "en"; //english by default
 var cityName = "Rio de Janeiro"; //Rio de Janeiro by default
 var favoriteList = [];
+var currentUnit = "metric";
 
 currentInfoByCity(cityName);
 
