@@ -336,14 +336,19 @@ function cityWeatherData(response) {
   city.innerHTML = `${response.data.name}, ${response.data.sys.country}`;
 
   cityName = response.data.name;
+  let existingEntry = 0;
 
   favoriteList.forEach(function (favoriteCity) {
     if (favoriteCity === cityName) {
-      blockFavoriteButton("exists");
-    } else {
-      showFavoriteButton();
+      existingEntry = existingEntry + 1;
     }
   });
+
+  if (existingEntry === 0) {
+    showFavoriteButton();
+  } else {
+    blockFavoriteButton("exists");
+  }
 
   retrieveForecast(lat, lon);
 }
