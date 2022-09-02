@@ -650,6 +650,8 @@ function languageEN() {
   document.querySelector(".language-1").style.display = "none";
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "block";
+  document.querySelector("#show-fav").title = "See favorites";
+  document.querySelector("#show-start").title = "Return to the first page";
   document.querySelector("#city-name").placeholder = "Search for city...";
   document.querySelector("#favorite-title").innerHTML =
     "Your list of favorites:";
@@ -661,9 +663,11 @@ function languageFR() {
   document.querySelector(".language-1").style.display = "block";
   document.querySelector(".language-2").style.display = "none";
   document.querySelector(".language-3").style.display = "block";
+  document.querySelector("#show-fav").title = "Voir favoris";
+  document.querySelector("#show-start").title = "Revenir à la première page";
   document.querySelector("#city-name").placeholder = "Recherche par ville...";
   document.querySelector("#favorite-title").innerHTML =
-    "Votre liste de favorits:";
+    "Votre liste de favoris:";
 }
 
 function languagePTBR() {
@@ -672,6 +676,8 @@ function languagePTBR() {
   document.querySelector(".language-1").style.display = "block";
   document.querySelector(".language-2").style.display = "block";
   document.querySelector(".language-3").style.display = "none";
+  document.querySelector("#show-fav").title = "Ver favoritos";
+  document.querySelector("#show-start").title = "Voltar para a primeira página";
   document.querySelector("#city-name").placeholder = "Procurar por cidade...";
   document.querySelector("#favorite-title").innerHTML =
     "Sua lista de favoritos: ";
@@ -716,7 +722,7 @@ function showFavoriteButton() {
   }
 
   if (language === "fr") {
-    document.querySelector("#add-favorite").title = "Rajouter aux favorits";
+    document.querySelector("#add-favorite").title = "Rajouter aux favoris";
   }
 
   if (language === "pt_br") {
@@ -737,7 +743,6 @@ function addfavoriteCity() {
     }
   } else {
     document.querySelector("#show-fav").style.display = "block";
-
     blockFavoriteButton("exists");
     favoriteList.push(cityName);
     manageFavoriteList();
