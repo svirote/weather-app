@@ -140,17 +140,19 @@ p {
 .fa-magnifying-glass:hover,
 .fahrenheit:hover,
 .celsius:hover,
-.favorite-symbol:hover,
+.fa-star:hover,
 .fa-globe:hover,
 .fa-arrows-rotate:hover {
   color: #ffd369;
   cursor: pointer;
+  transition: all 250ms ease-in-out;
 }
 
 .favorite-list:hover .list-fav-city {
   display: block;
   background-color: rgb(86, 93, 104, 0.3);
   border-radius: 10px;
+  transition: all 250ms ease-in-out;
 }
 
 .forecast-symbol {

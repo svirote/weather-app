@@ -683,25 +683,9 @@ function loadPage() {
 
 function blockFavoriteButton(string) {
   let favoriteCity = document.querySelector("#add-favorite");
-
   favoriteCity.removeEventListener("click", addfavoriteCity);
   favoriteCity.classList.remove("favorite-symbol");
-  favoriteCity.style.color = "#393E46";
-
-  if (string === "full") {
-    if (language === "en") {
-      document.querySelector("#add-favorite").title =
-        "You already have 3 favorite cities !";
-    }
-    if (language === "fr") {
-      document.querySelector("#add-favorite").title =
-        "Vous avez déjà 3 villes favorites !";
-    }
-    if (language === "pt_br") {
-      document.querySelector("#add-favorite").title =
-        "Você já favoritou 3 cidades !";
-    }
-  }
+  favoriteCity.style.color = "#eeeeee";
 
   if (string === "exists") {
     if (language === "en") {
@@ -710,7 +694,7 @@ function blockFavoriteButton(string) {
     }
     if (language === "fr") {
       document.querySelector("#add-favorite").title =
-        "Cette ville est déjà une favorit !";
+        "Cette ville est déjà favorit !";
     }
     if (language === "pt_br") {
       document.querySelector("#add-favorite").title =
@@ -725,7 +709,7 @@ function showFavoriteButton() {
   favoriteCity.addEventListener("click", addfavoriteCity);
   favoriteCity.classList.add("favorite-symbol");
   favoriteCity.title = "Add to favorite list";
-  favoriteCity.style.color = "#eeeeee";
+  favoriteCity.style.color = "#393E46";
 
   if (language === "en") {
     document.querySelector("#add-favorite").title = "Add to favorites";
@@ -741,17 +725,29 @@ function showFavoriteButton() {
 }
 
 function addfavoriteCity() {
-  document.querySelector("#show-fav").style.display = "block";
-
-  blockFavoriteButton("exists");
-  favoriteList.push(cityName);
-  manageFavoriteList();
-
-  let seeFavoriteList = document.querySelector("#favorite");
-  seeFavoriteList.style.color = "#eeeeee";
-
   if (favoriteList.length === 3) {
-    blockFavoriteButton("full");
+    if (language === "en") {
+      alert("You already have 3 favorite cities !");
+    }
+    if (language === "fr") {
+      alert("Vous avez déjà 3 villes favorites !");
+    }
+    if (language === "pt_br") {
+      alert("Você já favoritou 3 cidades !");
+    }
+  } else {
+    document.querySelector("#show-fav").style.display = "block";
+
+    blockFavoriteButton("exists");
+    favoriteList.push(cityName);
+    manageFavoriteList();
+
+    let seeFavoriteList = document.querySelector("#favorite");
+    seeFavoriteList.style.color = "#eeeeee";
+
+    if (favoriteList.length === 3) {
+      blockFavoriteButton("full");
+    }
   }
 }
 
